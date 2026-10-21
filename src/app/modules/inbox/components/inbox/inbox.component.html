@@ -1,0 +1,9 @@
+<div class="layout layout--full">
+    <div class="container">
+        <div class="sub-title">
+            <h5>{{currentSection.pageTitle}}</h5>
+        </div>
+        <app-data-table [data_table]="data_table" (clickedRow)="selectedRow($event)" (clickedChildButton)="clickChildButton($event)"></app-data-table>
+        <app-paginator *ngIf="transactionsList.length > 0" [rows]="transactionsPayload.pageSize" [totalRecords]="totalRecords" (switch)="onPageChange($event)"></app-paginator>
+    </div>
+</div>

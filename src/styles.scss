@@ -1,1 +1,539 @@
-/* You can add global styles to this file, and also import other style files */
+@import "scss/_variables.scss";
+@import "scss/_grid.scss";
+@import "scss/_reset.scss";
+@import "scss/_buttons.scss";
+@import "scss/_forms.scss";
+@import "scss/_fonts.scss";
+@import "scss/_icons.scss";
+@import "scss/_layout.scss";
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.css";
+
+/* Order */
+@layer reset, primeng;
+
+/* Reset CSS */
+@layer reset {
+    button,
+    input {
+        /* CSS to Reset */
+    }
+}
+
+
+.list-view{
+    display: flex;
+    align-items: center;
+    img{
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+    }
+    div{
+        display: flex;
+        flex-direction: column;
+        margin-right: 15px;
+        h5{
+            text-overflow: ellipsis;
+            max-width: 13ch;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        h6{
+            font-size: 23px;
+        }
+        p{
+            color: $primary;
+            font-size: 15px;
+        }
+    }
+}
+
+
+
+.no-data{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    // height: 100%;
+    flex-direction: column;
+    min-height: 300px;
+    // height: 100%;
+    div{
+        width: 100px;
+        height: 100px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: $light-gray;
+        margin-bottom: 20px;
+        .icon{
+            svg{
+                width: 40px;
+                height: 40px;
+                position: relative;
+                top: 5px;
+                path{
+                    fill: #4d616c;
+                }
+            }
+        }
+    }
+    p{
+        color: $text-gray;
+        font-size: 30px;
+    }
+}
+
+.main-progress{
+    position: relative;
+    display: flex;
+    background: $white;
+    padding: 25px;
+    border-radius: 15px;
+    margin-bottom: 15px;
+    height: 250px;
+    margin-right: 15px;
+    align-items: end;
+    transition: 0.2s;
+    cursor: pointer;
+    &__number{
+        position: absolute;
+        width: 80px;
+        height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        top: 25px;
+        left: 25px;
+        background: $light-gray;
+        border-radius: 50%;
+        transition: 0.2s;
+        p{
+            color: $primary;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+    }
+    h5{
+        transition: 0.2s;
+    }
+    &:hover{
+        .main-progress{
+            &__number{
+                background: $primary;
+                p{
+                    color: $white;
+                }
+            }
+            
+        }
+        h5{
+            color: $primary;
+        }
+    }
+}
+
+.topic-status{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 36px;
+    border-radius: 25px;
+    width: 100px;
+    p{
+        font-size: 19px;
+        font-family: TanseekModern-bold;
+        font-weight: bold;
+        letter-spacing: 0px;
+    }
+    &.regular{
+        background: #c0e8ff;
+        p{
+            color: #001e2b;
+        }
+    }
+    &.important{
+        background: #e4dfff;
+        p{
+            color: #1b1736;
+        }
+    }
+    &.limited{
+        background: #e4dfff;
+        p{
+            color: #1b1736;
+        }
+    }
+    &.urgent{
+        background: #ffdad6;
+        color: #4d0d0f;
+    }
+}
+
+
+
+.content-box{
+    display: flex;
+    flex-direction: column;
+    background: $white;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+    &__head{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        div{
+            display: flex;
+            align-items: center;
+            .security-status{
+                margin-left: 15px;
+            }
+        }
+    }
+    &__body{
+        margin-top: 20px;
+    }
+    &__subTitle{
+        margin-top: 15px;
+        p{
+            font-size: 27px;
+        }
+    }
+    &--primary{
+        background: #c0e8ff;
+    }
+    @media (max-width:767px){
+        padding: 10px;
+        margin-bottom: 15px;
+    }
+}
+
+
+
+.security-status{
+    display: flex;
+    align-items: center;
+    background: #f6fafe;
+    border-radius: 25px;
+    border: 1px solid #dee5eb;
+    width: 160px;
+    justify-content: center;
+    height: 36px;
+    .icon{
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 5px;
+        svg path{
+            fill: #71787d;
+        }
+    }
+    p{
+        color: #71787d;
+        margin: 0 5px;
+        font-size: 19px;
+        font-weight: bold;
+        font-family: TanseekModern-bold;
+        letter-spacing: 0;
+    }
+    @media (max-width:767px){
+        width: 100px;
+    }
+}
+
+.attachment-item{
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background: $light-gray;
+    border-radius: 5px;
+    height: 50px;
+    margin-bottom: 30px;
+    cursor: pointer;
+    transition: 0.2s;
+    .icon{
+        position: relative;
+        top: 2px;
+        svg path{
+            fill: $black;
+        }
+    }
+    p{
+        margin: 0 10px;
+        max-width: 25ch;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+    &:hover{
+        background: #edf6ff;
+    }
+}
+
+.buttons-holder{
+    display: flex;
+    flex-direction: column;
+    .btn{
+        max-width: none;
+        width: 100%;
+        margin-bottom: 15px;
+        &:last-of-type{
+            margin-bottom: 0;
+        }
+    }
+}
+
+.qr-box{
+    img{
+        width: 100%;
+    }
+}
+
+.topic-history{
+    display: flex;
+    flex-direction: column;
+    &__one{
+        border-bottom: 1px solid $gray;
+        display: flex;
+        flex-direction: column;
+        padding-top: 5px;
+        padding-bottom: 15px;
+        p{
+            color: $primary;
+            font-size: 16px;
+        }
+        &:last-of-type{
+            border-bottom: 0;
+            padding-bottom: 0;
+        }
+    }
+    
+}
+
+.member-box{
+    display: flex;
+    align-items: center;
+    // justify-content: center;
+    padding: 15px;
+    border-radius: 10px;
+    background: $light-gray;
+    margin-top: 20px;
+    min-width: 30.33%;
+    max-width: 30.33%;
+    margin-left: 20px;
+    &__img{
+        margin-left: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        img{
+            width: 60px;
+            height: 60px;
+            border: 1px solid #cdcece;
+            border-radius: 50%;
+        }
+    }
+    &__data{
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        justify-content: center;
+        p{
+            line-height: 15px;
+            margin-bottom: 10px;
+        }
+        span{
+            font-size: 16px;
+            color: $text-gray;
+        }
+    }
+    &__action{
+        cursor: pointer;
+        margin-right: auto;
+        // .icon svg{
+        //     path{
+                
+        //     }
+        // }
+        .icon{
+            width: 24px;
+            height: 24px;
+            &.add{
+
+            }
+            &.remove{
+                svg path{
+                    fill: $invalid;
+                }
+            }
+        }
+    }
+    @media (max-width:1023px){
+        min-width: 45%;
+        max-width: 45%;
+    }
+    @media (max-width:600px){
+        min-width: 100%;
+        max-width: 100%;
+        margin-left: 0;
+    }
+}
+
+.confirmation-wrap{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    .message{
+        margin: 15px 0;
+    }
+    .buttons{
+        margin: 20px 0;
+        margin-bottom: 35px;
+        display: flex;
+        .btn{
+            margin: 0 15px;
+        }
+    }
+}
+
+p-confirmdialog .p-dialog-footer button{
+    display: none;
+}
+
+.notifications {
+    display: flex;
+    flex-direction: column;
+    &__list {
+        display: flex;
+        flex-direction: column;
+        max-height: 450px;
+        overflow-y: auto;
+        &::-webkit-scrollbar {
+            width: 5px;
+          }
+        &::-webkit-scrollbar-track {
+            background: #f3f3f3;
+        }
+        &::-webkit-scrollbar-thumb {
+            background:rgba(0,0,0,0.1);
+          }
+    }
+    
+    
+    &__record {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+        padding: 10px;
+        background: $light-gray;
+        border-radius: 10px;
+        cursor: pointer;
+        &:last-of-type {
+            margin-bottom: 0;
+        }
+        .dot {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            // width: 50px;
+            margin-left: 10px;
+            .icon {
+                display: flex;
+                width: 10px;
+                height: 10px;
+                border-radius: 50%;
+            }
+            &.unreaded{
+                .icon{
+                    background: $primary;
+                }
+            }
+        }
+        div {
+            p {
+                font-size: 16px;
+                line-height: 16px;
+                color: $black;
+            }
+            span {
+                font-size: 14px;
+                line-height: 14px;
+                font-family: TanseekModern-bold;
+            }
+        }
+    }
+}
+
+.other-actions{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    p{
+        color: $primary;
+        cursor: pointer;
+    }
+}
+
+
+.report-status{
+    display: flex;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    position: relative;
+    top: 3px;
+    &__0{
+        background: #d9d9da;
+    }
+    &__1{
+        background: #ffc000;
+    }
+    &__2{
+        background: $primary;
+    }
+    &__3{
+        background: #70c140;
+    }
+    &__4{
+        background: #ff0000;
+    }
+}
+
+.link-transactions{
+    margin-top: 15px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #eee;
+    &__one{
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        cursor: pointer;
+        p{
+            
+        }
+        &:last-of-type{
+            margin-bottom: 0;
+        }
+        &.selected{
+            p{
+                color: #8dcff1;
+            }
+        }
+        .icon{
+            svg{
+                width: 20px;
+                height: 20px;
+                fill: $primary;
+            }
+        }
+    }
+}

@@ -1,0 +1,140 @@
+@import "../scss/variables";
+
+html,
+body {
+    direction: rtl;
+    text-align: right;
+}
+
+#app {
+    display: flex;
+
+    &__content {
+        display: flex;
+    }
+
+    aside {
+        width: 200px;
+        position: fixed;
+        right: 0;
+        top: 0;
+        transition: 0.2s;
+        &.active{
+            right: 0;
+        }
+    }
+
+    main {
+        flex-grow: 1;
+        padding-top: 70px;
+        padding-right: 200px;
+    }
+
+    @media (max-width:1279px) {
+        main {
+            padding-right: 0;
+        }
+
+        aside {
+            top: 70px;
+            height: calc(100vh - 70px);
+            z-index: 10;
+            right: -400px;
+        }
+    }
+}
+
+.app {
+    &__content {
+        display: flex;
+        width: 100%;
+    }
+}
+
+.layout {
+    display: flex;
+    min-height: calc(100vh - 70px);
+    // padding-top: 70px;
+    background-color: $light-gray;
+    background-image: url(../../public/assets/images/graphics-b.png);
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+
+    &--home {
+        // min-height: calc(100vh - 70px);
+        background-image: url(../../public/assets/images/graphics-a.png);
+        background-size: 100%;
+        background-position: initial;
+    }
+
+    &__main {
+        flex-grow: 1;
+    }
+
+    &__aside {
+        // min-width: 330px;
+        // max-width: 330px;
+        min-width: 370px;
+        max-width: 370px;
+        margin-right: 15px;
+    }
+
+    @media (max-width:1023px) {
+        .flex {
+            flex-direction: column;
+            flex-wrap: wrap;
+        }
+
+        .layout {
+            &__aside {
+                flex-grow: 1;
+                min-width: auto;
+                max-width: none;
+                margin-right: 0;
+            }
+        }
+
+    }
+}
+
+.user-box {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    background-image: url(../../public/assets/images/center-circle.png);
+    background-color: #C0E8FF;
+    background-size: 75%;
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    align-items: center;
+    justify-content: center;
+
+    &__content {
+        background: $white;
+        width: 30%;
+        min-width: 250px;
+        padding: 20px;
+        border-radius: 10px;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    &__logo {
+        img {
+            height: 50px;
+        }
+    }
+
+    &__form {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+
+        .btn {
+            margin-top: 30px;
+            width: 100%;
+        }
+    }
+}

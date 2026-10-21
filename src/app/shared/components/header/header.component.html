@@ -1,0 +1,79 @@
+<header class="header">
+    <div class="header__content">
+        <div class="header__side">
+            <div class="header__burger">
+                <span></span>
+            </div>
+            <app-input-text (onPressEnter)="searchText($event.target.value)" [field]="search"></app-input-text>
+        </div>
+        <div class="header__side">
+            <div class="header__notification" (click)="isShowNotificationsBox = !isShowNotificationsBox" (appClickoutside)="isShowNotificationsBox = false">
+                <span class="icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M13.0002 3C13.0002 2.44772 12.5525 2 12.0002 2C11.4479 2 11.0002 2.44772 11.0002 3V3.75H10.4428C8.21769 3.75 6.3761 5.48001 6.2372 7.70074L6.0162 11.2342C5.93194 12.5814 5.47965 13.8797 4.70859 14.9876C4.01191 15.9886 4.63213 17.3712 5.84306 17.5165L9.25018 17.9254V19C9.25018 20.5188 10.4814 21.75 12.0002 21.75C13.519 21.75 14.7502 20.5188 14.7502 19V17.9254L18.1573 17.5165C19.3682 17.3712 19.9885 15.9886 19.2918 14.9876C18.5207 13.8797 18.0684 12.5814 17.9842 11.2342L17.7632 7.70074C17.6243 5.48001 15.7827 3.75 13.5576 3.75H13.0002V3ZM10.4428 5.25C9.00976 5.25 7.82373 6.36417 7.73427 7.79438L7.51327 11.3278C7.41188 12.949 6.86762 14.5112 5.93977 15.8444C5.88942 15.9168 5.93425 16.0167 6.02177 16.0272L9.75943 16.4757C11.2479 16.6543 12.7524 16.6543 14.2409 16.4757L17.9786 16.0272C18.0661 16.0167 18.1109 15.9168 18.0606 15.8444C17.1327 14.5112 16.5885 12.949 16.4871 11.3278L16.2661 7.79438C16.1766 6.36417 14.9906 5.25 13.5576 5.25H10.4428ZM12.0002 20.25C11.3098 20.25 10.7502 19.6904 10.7502 19V18.25H13.2502V19C13.2502 19.6904 12.6905 20.25 12.0002 20.25Z"
+                            fill="#36b4e5" />
+                    </svg>
+                    <div *ngIf="notificationCount > 0" class="count">
+                        <p class="font-line">
+                            {{notificationCount}}
+                        </p>
+                    </div>
+                </span>
+                <div class="header__dropdown header__notificationDropdown" [ngClass]="{'active':isShowNotificationsBox}">
+                    <h5 class="title">الإشعارات</h5>
+                    <app-notifications></app-notifications>
+                </div>
+            </div>
+            <div class="header__user" (click)="isShowUserBox = !isShowUserBox" (appClickoutside)="isShowUserBox = false">
+                <div class="list-view">
+                    <img
+                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTN7yx5hKkcbEIbsPIONrJOi8b_q_WiXzTyQ&s" />
+                    <div>
+                        <h6>{{userData?.LastName}} {{userData?.FirstName}}</h6>
+                        <p>{{userData?.GroupName}}</p>
+                        <!-- <h6>{{userData?.name}}</h6> -->
+                        
+                    </div>
+                </div>
+                <!-- <img
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTN7yx5hKkcbEIbsPIONrJOi8b_q_WiXzTyQ&s" /> -->
+                <div class="header__dropdown header__userDropdown" [ngClass]="{'active':isShowUserBox}">
+                    <h6 class="title">الإعدادات</h6>
+                    <!-- <div class="list-view">
+                        <img
+                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTN7yx5hKkcbEIbsPIONrJOi8b_q_WiXzTyQ&s" />
+                        <div>
+                            <h6>إسم المستخدم</h6>
+                            <p>mail&#64;thiqah.sa</p>
+                        </div>
+                    </div> -->
+                    <span (click)="logout()" class="btn btn--secondary btn--icon">
+                        <span class="icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M12 18.25C11.5858 18.25 11.25 18.5858 11.25 19C11.25 19.4142 11.5858 19.75 12 19.75H18C18.9665 19.75 19.75 18.9665 19.75 18V6C19.75 5.0335 18.9665 4.25 18 4.25H12C11.5858 4.25 11.25 4.58579 11.25 5C11.25 5.41421 11.5858 5.75 12 5.75L18 5.75C18.1381 5.75 18.25 5.86193 18.25 6L18.25 18C18.25 18.1381 18.1381 18.25 18 18.25H12Z"
+                                    fill="white" />
+                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                    d="M14.5031 14.3652C15.1934 14.3652 15.7531 13.8056 15.7531 13.1152V10.8747C15.7531 10.1843 15.1934 9.6247 14.5031 9.6247L9.89048 9.6247C9.88396 9.55128 9.87713 9.47787 9.87 9.40448L9.81597 8.8486C9.73354 8.00049 8.83294 7.49258 8.06451 7.86084C6.43029 8.64403 4.95085 9.71578 3.69736 11.0245L3.59816 11.1281C3.13395 11.6128 3.13395 12.3771 3.59815 12.8618L3.69736 12.9654C4.95085 14.2741 6.43029 15.3459 8.06451 16.1291C8.83293 16.4973 9.73354 15.9894 9.81597 15.1413L9.87 14.5854C9.87713 14.512 9.88396 14.4386 9.89048 14.3652H14.5031ZM9.19511 12.8652C8.92874 12.8652 8.69326 13.0045 8.56008 13.216C8.49523 13.319 8.45464 13.4391 8.44656 13.5685C8.42842 13.8594 8.40524 14.15 8.37703 14.4403L8.36135 14.6017C7.3253 14.0677 6.36316 13.4028 5.49838 12.6239C5.27402 12.4218 5.05622 12.2121 4.84538 11.995C5.86892 10.9409 7.05651 10.0607 8.36135 9.38824L8.37703 9.54959C8.40524 9.83987 8.42842 10.1305 8.44656 10.4214C8.47122 10.8167 8.79902 11.1247 9.19511 11.1247H14.2531V12.8652H9.19511Z"
+                                    fill="white" />
+                            </svg>
+                        </span>
+                        <p class="font-line">تسجيل خروج</p>
+                    </span>
+                </div>
+            </div>
+            <a *ngIf="PermissionsService.isHasPermissions('add_transaction')" (click)="Router.navigate(['cms/topic/create-topic'])" class="btn btn--secondary btn--icon">
+                <span class="icon">
+                    <svg height="1792" viewBox="0 0 1792 1792" width="1792" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M1344 800v64q0 14-9 23t-23 9h-352v352q0 14-9 23t-23 9h-64q-14 0-23-9t-9-23v-352h-352q-14 0-23-9t-9-23v-64q0-14 9-23t23-9h352v-352q0-14 9-23t23-9h64q14 0 23 9t9 23v352h352q14 0 23 9t9 23zm128 448v-832q0-66-47-113t-113-47h-832q-66 0-113 47t-47 113v832q0 66 47 113t113 47h832q66 0 113-47t47-113zm128-832v832q0 119-84.5 203.5t-203.5 84.5h-832q-119 0-203.5-84.5t-84.5-203.5v-832q0-119 84.5-203.5t203.5-84.5h832q119 0 203.5 84.5t84.5 203.5z" />
+                    </svg>
+                </span>
+                <p class="font-line">معاملة جديدة</p>
+            </a>
+
+        </div>
+    </div>
+</header>

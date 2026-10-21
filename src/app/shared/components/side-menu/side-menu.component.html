@@ -1,0 +1,11 @@
+<div class="side-menu">
+    <div class="side-menu__logo">
+        <img src="/assets/images/app-logo.png"/>
+    </div>
+    <nav class="side-menu__nav">
+        <div *ngFor="let item of menu" [ngClass]="{'active':item.isActive}" (click)="routing(item)">
+            <span class="icon" [innerHTML]="item.isActive ? item.activeIcon : item.icon"></span>
+            <p class="font-line">{{item.label}}</p>
+        </div>
+    </nav>
+</div>

@@ -1,0 +1,73 @@
+<div class="layout layout--full">
+    <div class="container">
+        <div class="sub-title">
+            <h5>إضافة مرفقات لمعاملة</h5>
+        </div>
+        <div class="content-box">
+            <div class="content-box__body">
+                <app-input-text (onPressEnter)="searchText($event.target.value)"
+                    [field]="search"></app-input-text>
+                <div class="link-transactions">
+                    <ng-container *ngIf="transactionsList.length > 0">
+                        <div [ngClass]="{'selected':item.isSelected}" (click)="selectTransaction(item)" *ngFor="let item of transactionsList" class="link-transactions__one">
+                            <p>{{item?.registrationNumber}} - {{item?.topic}}</p>
+                            <span *ngIf="item.isSelected" class="icon">
+                                <svg enable-background="new 0 0 256 256" height="256px" id="Layer_1" version="1.1" viewBox="0 0 256 256" width="256px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M98.131,211.199c-1.521,0-3-0.541-4.165-1.541l-59.731-51.2c-2.685-2.3-2.994-6.34-0.693-9.024  c2.3-2.682,6.347-2.991,9.024-0.694L97.2,195.571L212.547,47.271c2.172-2.79,6.197-3.29,8.981-1.125  c2.79,2.172,3.294,6.194,1.125,8.981L103.185,208.728c-1.075,1.381-2.669,2.262-4.409,2.44  C98.56,211.189,98.344,211.199,98.131,211.199z"/></svg>
+                            </span>
+                        </div>
+                    </ng-container>
+                    <p *ngIf="transactionsList.length == 0">لا يوجد نتائج للبحث عن معاملة</p>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="selectedTransactionNumber" class="attachments-edit">
+            <div class="content-box">
+                <div class="content-box__head">
+                    <h6>المرفقات</h6>
+                </div>
+                <div class="content-box__body">
+                    <div *ngIf="transactionData?.files && transactionData?.files.length > 0" class="row">
+                        <div *ngFor="let item of transactionData?.files" class="col-md-4">
+                            <div (click)="downloadAttachment(item.id)" class="attachment-item">
+                                <span class="icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M14.0315 13.1643C14.355 12.9056 14.8269 12.958 15.0857 13.2815C15.3444 13.6049 15.292 14.0769 14.9685 14.3357L12.4746 16.3308C12.3459 16.4361 12.1816 16.4994 12.0025 16.5L12.0001 16.5L11.9937 16.5C11.8177 16.4985 11.6561 16.4364 11.5288 16.3335L9.03151 14.3357C8.70806 14.0769 8.65562 13.6049 8.91438 13.2815C9.17313 12.958 9.6451 12.9056 9.96855 13.1643L11.2501 14.1896V10.75C11.2501 10.3358 11.5858 10 12.0001 10C12.4143 10 12.7501 10.3358 12.7501 10.75V14.1895L14.0315 13.1643Z"
+                                            fill="white" />
+                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                            d="M7 2.25C5.48122 2.25 4.25 3.48122 4.25 5V19C4.25 20.5188 5.48122 21.75 7 21.75H17C18.5188 21.75 19.75 20.5188 19.75 19V8.1979C19.75 7.83178 19.6352 7.47488 19.4217 7.17745L16.4085 2.97955C16.0798 2.52157 15.5506 2.25 14.9868 2.25H7ZM5.75 5C5.75 4.30964 6.30964 3.75 7 3.75H14.25V8.14705C14.25 8.56126 14.5858 8.89705 15 8.89705H18.25V19C18.25 19.6904 17.6904 20.25 17 20.25H7C6.30964 20.25 5.75 19.6904 5.75 19V5Z"
+                                            fill="white" />
+                                    </svg>
+                                </span>
+                                <p class="font-line">{{item.name}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <p *ngIf="transactionData?.files && transactionData?.files.length == 0">لم يتم إرفاق ملفات لهذه المعاملة</p>
+                </div>
+            </div>
+
+            <div class="content-box">
+                <div class="content-box__head">
+                    <h6>إضافة مرفقات</h6>
+                </div>
+                <div class="content-box__body">
+                    <div class="row">
+                        <div *ngFor="let field of attachmentsControls" class="col-md-{{field.cols}}">
+                            <app-upload-files (uploadedFilesValue)="attachmentsValue($event,field.name)"
+                                *ngIf="field.type == 'fileupload'" [field]="field" [isClearing]="clearAttchments"
+                                ></app-upload-files>
+                        </div>
+                        <div class="col-md-12">
+                            <a (click)="submitFiles()" *ngIf="uploadedFiles.length > 0" class="btn btn--primary">
+                                <p class="font-line">تحميل المرفقات</p>
+                            </a>
+                        </div>
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,331 @@
+<div class="layout">
+    <div class="container">
+        <div class="sub-title">
+            <a (click)="back()" class="btn btn--tertiary btn--icon">
+                <span class="icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M13.4697 8.53033C13.1768 8.23744 13.1768 7.76256 13.4697 7.46967C13.7626 7.17678 14.2374 7.17678 14.5303 7.46967L18.5303 11.4697C18.8232 11.7626 18.8232 12.2374 18.5303 12.5303L14.5303 16.5303C14.2374 16.8232 13.7626 16.8232 13.4697 16.5303C13.1768 16.2374 13.1768 15.7626 13.4697 15.4697L16.1893 12.75H6.5C6.08579 12.75 5.75 12.4142 5.75 12C5.75 11.5858 6.08579 11.25 6.5 11.25H16.1893L13.4697 8.53033Z"
+                            fill="white" />
+                    </svg>
+                </span>
+                <p class="font-line">عودة</p>
+            </a>
+        </div>
+        <div class="flex">
+            <div class="layout__main">
+                <div class="topic-details">
+                    <div class="content-box">
+                        <h1>{{transactionData?.topic}}</h1>
+                        <div class="content-box__head">
+                            <h6>تفاصيل المعاملة</h6>
+                            <div>
+                                <span [style.background]="transactionData?.transactionAdjectiveBackGroundColor ? transactionData?.transactionAdjectiveBackGroundColor : 'transparent'" class="topic-status">
+                                    <p class="font-line">{{transactionData?.transactionAdjectiveName}}</p>
+                                </span>
+                                <!-- <span class="security-status">
+                                    <span class="icon">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M10.4998 15.9996C10.4998 15.1712 11.1714 14.4996 11.9998 14.4996C12.8283 14.4996 13.4998 15.1712 13.4998 15.9996C13.4998 16.828 12.8283 17.4996 11.9998 17.4996C11.1714 17.4996 10.4998 16.828 10.4998 15.9996Z"
+                                                fill="white" />
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                d="M9.81034 4.0046C10.0427 3.91209 10.2851 3.84714 10.5326 3.81108C12.0058 3.59641 13.4325 4.42624 13.9743 5.81298L14.0493 6.00501C14.1423 6.24294 14.2086 6.49044 14.2471 6.74297L14.4637 8.16528L15.9466 7.93943L15.73 6.51712C15.6748 6.15508 15.5797 5.80026 15.4465 5.45915L15.3715 5.26713C14.5757 3.23029 12.4802 2.01145 10.3163 2.32675C9.9528 2.37972 9.59676 2.47512 9.25548 2.611C7.22382 3.4199 6.01852 5.52318 6.34777 7.68501L6.37881 7.88882C6.43396 8.25086 6.52903 8.60568 6.6623 8.94679L7.31644 10.6211L6.93497 10.6516C5.85224 10.738 4.96814 11.5519 4.79262 12.6238C4.42655 14.8595 4.42655 17.1398 4.79262 19.3754C4.96814 20.4473 5.85224 21.2612 6.93497 21.3477L8.4311 21.4671C10.8065 21.6567 13.1932 21.6567 15.5686 21.4671L17.0647 21.3477C18.1474 21.2612 19.0316 20.4473 19.2071 19.3754C19.5731 17.1398 19.5731 14.8595 19.2071 12.6238C19.0316 11.5519 18.1474 10.738 17.0647 10.6516L15.5686 10.5321C13.3425 10.3544 11.1064 10.3433 8.87901 10.4986L8.05945 8.40094C7.96649 8.163 7.90018 7.9155 7.86171 7.66297L7.83067 7.45916C7.60651 5.98731 8.42712 4.55533 9.81034 4.0046ZM15.4492 12.0274C13.1533 11.8441 10.8464 11.8441 8.55047 12.0274L7.05434 12.1468C6.65941 12.1783 6.33693 12.4752 6.27291 12.8662C5.93312 14.9413 5.93312 17.0579 6.27291 19.133C6.33693 19.524 6.65941 19.8209 7.05434 19.8524L8.55047 19.9719C10.8464 20.1552 13.1533 20.1552 15.4492 19.9719L16.9454 19.8524C17.3403 19.8209 17.6628 19.524 17.7268 19.133C18.0666 17.0579 18.0666 14.9413 17.7268 12.8662C17.6628 12.4752 17.3403 12.1783 16.9454 12.1468L15.4492 12.0274Z"
+                                                fill="white" />
+                                        </svg>
+                                    </span>
+                                    <p class="font-line">{{transactionData?.transactionAdjectiveName}}</p>
+                                </span> -->
+                                <span style="margin-right: 15px;" class="topic-status regular">
+                                    <p class="font-line">{{transactionData?.importanceLevelName}}</p>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="content-box__body">
+                            <div class="topic-details__info">
+                                <div class="topic-details__property">
+                                    <span>نوع المعاملة</span>
+                                    <p>{{transactionType ? transactionType : '-'}}</p>
+                                </div>
+                                <div class="topic-details__property">
+                                    <span>رقم القيد</span>
+                                    <p>{{transactionData?.registrationNumber ? transactionData?.registrationNumber : '-'}}</p>
+                                </div>
+                                <div class="topic-details__property">
+                                    <span>المرسل إليه</span>
+                                    <p>{{transactionData?.groupLevelName ? transactionData?.groupLevelName : '-'}}</p>
+                                </div>
+                                <div class="topic-details__property">
+                                    <span>ناريخ المعاملة</span>
+                                    <p>{{transactionData?.date ? (transactionData?.date | date) : '-'}}</p>
+                                </div>
+                                <div class="topic-details__property">
+                                    <span>رقم خطاب الوارد</span>
+                                    <p>{{transactionData?.incomingLetterNumber ? transactionData?.incomingLetterNumber : '-'}}</p>
+                                </div>
+                                <div class="topic-details__property">
+                                    <span>تاريخ خطاب الوارد</span>
+                                    <p>{{transactionData?.incomingLetterDate ? (transactionData?.incomingLetterDate | date) : '-'}}</p>
+                                </div>
+                                <div class="topic-details__property">
+                                    <span>الجهة الرئيسية</span>
+                                    <p>{{transactionData?.parentOrganizationName ? transactionData?.parentOrganizationName : '-'}}</p>
+                                </div>
+                                <div class="topic-details__property">
+                                    <span>الجهة الفرعية</span>
+                                    <p>{{transactionData?.organizationName ? transactionData?.organizationName : '-'}}</p>
+                                </div>
+                                <div class="topic-details__property">
+                                    <span>المشفوعات</span>
+                                    <p>{{transactionData?.attachmentsCount ? transactionData?.attachmentsCount : '-'}}</p>
+                                </div>
+                                <div class="topic-details__property">
+                                    <span>رقم الخزينة</span>
+                                    <p>{{transactionData?.safeId ? transactionData?.safeId : '-'}}</p>
+                                </div>
+                                <div class="topic-details__property">
+                                    <span>محدد بوقت</span>
+                                    <p [ngClass]="expirationDateStatus(transactionData?.expirationDate) ? 'not-expired' : 'expired'">{{transactionData?.expirationDate ? (transactionData?.expirationDate | date) : '-'}}</p>
+                                </div>
+                                <div class="topic-details__property topic-details__property--lg">
+                                    <span>ملاحظات</span>
+                                    <p>{{transactionData?.notes ? transactionData.notes : 'لم يتم إضافة ملاحظات على هذه المعاملة'}}</p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="content-box">
+                        <div class="content-box__head">
+                            <h6>المرفقات</h6>
+                        </div>
+                        <div class="content-box__body">
+                            <div *ngIf="transactionData?.files.length > 0" class="row">
+                                <div *ngFor="let item of transactionData?.files" class="col-md-4">
+                                    <div (click)="downloadAttachment(item.id)" class="attachment-item">
+                                        <span class="icon">
+                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M14.0315 13.1643C14.355 12.9056 14.8269 12.958 15.0857 13.2815C15.3444 13.6049 15.292 14.0769 14.9685 14.3357L12.4746 16.3308C12.3459 16.4361 12.1816 16.4994 12.0025 16.5L12.0001 16.5L11.9937 16.5C11.8177 16.4985 11.6561 16.4364 11.5288 16.3335L9.03151 14.3357C8.70806 14.0769 8.65562 13.6049 8.91438 13.2815C9.17313 12.958 9.6451 12.9056 9.96855 13.1643L11.2501 14.1896V10.75C11.2501 10.3358 11.5858 10 12.0001 10C12.4143 10 12.7501 10.3358 12.7501 10.75V14.1895L14.0315 13.1643Z"
+                                                    fill="white" />
+                                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                                    d="M7 2.25C5.48122 2.25 4.25 3.48122 4.25 5V19C4.25 20.5188 5.48122 21.75 7 21.75H17C18.5188 21.75 19.75 20.5188 19.75 19V8.1979C19.75 7.83178 19.6352 7.47488 19.4217 7.17745L16.4085 2.97955C16.0798 2.52157 15.5506 2.25 14.9868 2.25H7ZM5.75 5C5.75 4.30964 6.30964 3.75 7 3.75H14.25V8.14705C14.25 8.56126 14.5858 8.89705 15 8.89705H18.25V19C18.25 19.6904 17.6904 20.25 17 20.25H7C6.30964 20.25 5.75 19.6904 5.75 19V5Z"
+                                                    fill="white" />
+                                            </svg>
+                                        </span>
+                                        <p class="font-line">{{item.name}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <p *ngIf="transactionData?.files.length == 0">لم يتم إرفاق ملفات لهذه المعاملة</p>
+                        </div>
+                    </div>
+                    <div *ngIf="pageMode == 'inbox' || pageMode == 'refused' || pageMode == 'outgoing'" class="content-box">
+                        <div class="content-box__head">
+                            <h6>إضافة مرفقات</h6>
+                        </div>
+                        <div class="content-box__body">
+                            <div class="row">
+                                <div *ngFor="let field of attachmentsControls" class="col-md-{{field.cols}}">
+                                    <app-upload-files (uploadedFilesValue)="attachmentsValue($event,field.name)"
+                                        *ngIf="field.type == 'fileupload'" [field]="field" [isClearing]="clearAttchments"
+                                        ></app-upload-files>
+                                </div>
+                                <div class="col-md-12">
+                                    <a (click)="submitFiles()" *ngIf="uploadedFiles.length > 0" class="btn btn--primary">
+                                        <p class="font-line">تحميل المرفقات</p>
+                                    </a>
+                                </div>
+                               
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content-box">
+                        <div class="content-box__head">
+                            <h6>الملاحظات</h6>
+                        </div>
+                        <!-- <div *ngIf="transactionData?.comments.length == 0" class="content-box__body">
+                            <p>لا يوجد ملاحظات على هذه المعاملة</p>
+                        </div> -->
+                        <div  class="content-box__body">
+                            <app-comment [isWrite]="pageMode == 'inbox' || pageMode == 'copied' || pageMode == 'outgoing'" [comments]="transactionData?.comments" (commentValue)="getComment($event)"></app-comment>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layout__aside">
+                <div *ngIf="pageMode == 'inbox'" class="content-box content-box--primary">
+                    <div class="content-box__head">
+                        <h6>خيارات المعاملة</h6>
+                    </div>
+                    <div class="content-box__body">
+                        <div class="buttons-holder">
+                            <button  (click)="confirmationAction('save')" class="btn btn--secondary btn--icon">
+                                <span class="icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M8.74991 13.5C8.74991 13.0858 9.08569 12.75 9.49991 12.75H11.2499V11C11.2499 10.5858 11.5857 10.25 11.9999 10.25C12.4141 10.25 12.7499 10.5858 12.7499 11V12.75H14.4999C14.9141 12.75 15.2499 13.0858 15.2499 13.5C15.2499 13.9142 14.9141 14.25 14.4999 14.25H12.7499V16C12.7499 16.4142 12.4141 16.75 11.9999 16.75C11.5857 16.75 11.2499 16.4142 11.2499 16V14.25H9.49991C9.08569 14.25 8.74991 13.9142 8.74991 13.5Z"
+                                            fill="#36b4e5" />
+                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                            d="M21.1612 9.74679C21.558 12.233 21.5296 14.7686 21.077 17.2453C20.8747 18.353 19.9483 19.1833 18.8252 19.2636L17.1873 19.3808C13.7335 19.6279 10.2664 19.6279 6.81252 19.3808L5.29851 19.2725C4.10248 19.1869 3.11598 18.3027 2.90046 17.1232C2.46379 14.7333 2.38904 12.2913 2.6787 9.87915L2.95118 7.61004C3.11289 6.26343 4.25529 5.25 5.61158 5.25H7.90314C9.0209 5.25 9.95216 6.04846 10.1577 7.10612L18.4721 7.10612C19.7785 7.10612 20.8912 8.05533 21.0971 9.34535L21.1612 9.74679ZM19.6015 16.9757C20.0235 14.6662 20.05 12.3017 19.6799 9.98322L19.6159 9.58178C19.5261 9.0197 19.0413 8.60612 18.4721 8.60612H9.75926C9.1742 8.60612 8.69991 8.13183 8.69991 7.54677C8.69991 7.10672 8.34319 6.75 7.90314 6.75H5.61158C5.01455 6.75 4.51167 7.19611 4.44048 7.78888L4.168 10.058C3.89627 12.3208 3.9664 14.6116 4.37603 16.8536C4.46856 17.36 4.89208 17.7396 5.40555 17.7763L6.91956 17.8846C10.3021 18.1266 13.6977 18.1266 17.0803 17.8846L18.7181 17.7674C19.1587 17.7359 19.5221 17.4102 19.6015 16.9757Z"
+                                            fill="#36b4e5" />
+                                    </svg>
+                                </span>
+                                <p class="font-line">إضافة للأرشيف</p>
+                            </button>
+                            <button *ngIf="PermissionsService.isHasPermissions('add_transaction')" (click)="confirmationAction('export')" class="btn btn--secondary btn--icon">
+                                <span class="icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                            d="M10.7379 16.6269C9.96427 16.6269 9.31895 16.0357 9.2514 15.265C9.11015 13.6538 9.07441 12.0353 9.14427 10.42C9.05994 10.4143 8.97563 10.4085 8.89133 10.4023L7.40178 10.2937C6.44973 10.2243 5.91752 9.16276 6.43151 8.35837C7.5277 6.64286 9.53693 4.72281 11.1904 3.53507C11.6742 3.18753 12.3258 3.18753 12.8097 3.53507C14.4631 4.72281 16.4723 6.64286 17.5685 8.35837C18.0825 9.16276 17.5503 10.2243 16.5983 10.2937L15.1087 10.4023C15.0244 10.4084 14.9401 10.4143 14.8558 10.42C14.9256 12.0353 14.8899 13.6538 14.7486 15.265C14.6811 16.0357 14.0358 16.6269 13.2622 16.6269H10.7379ZM10.6815 9.7622C10.5678 11.5494 10.589 13.3428 10.745 15.1269H13.255C13.411 13.3427 13.4323 11.5494 13.3186 9.7622C13.3058 9.56183 13.3739 9.36471 13.5077 9.21497C13.6414 9.06523 13.8296 8.97536 14.0301 8.96548C14.3535 8.94955 14.6767 8.92982 14.9997 8.90627L16.0815 8.82742C15.1219 7.41412 13.9204 6.17987 12.5313 5.18201L12 4.80037L11.4687 5.18201C10.0796 6.17987 8.87813 7.41412 7.91858 8.82742L9.00038 8.90627C9.32337 8.92982 9.64656 8.94955 9.9699 8.96548C10.1704 8.97536 10.3586 9.06523 10.4924 9.21497C10.6261 9.36471 10.6942 9.56183 10.6815 9.7622Z"
+                                            fill="#36b4e5" />
+                                        <path
+                                            d="M5.75 16.9997C5.75 16.5855 5.41421 16.2497 5 16.2497C4.58579 16.2497 4.25 16.5855 4.25 16.9997V18.9997C4.25 19.9662 5.0335 20.7497 6 20.7497H18C18.9665 20.7497 19.75 19.9662 19.75 18.9997V16.9997C19.75 16.5855 19.4142 16.2497 19 16.2497C18.5858 16.2497 18.25 16.5855 18.25 16.9997V18.9997C18.25 19.1377 18.1381 19.2497 18 19.2497H6C5.86193 19.2497 5.75 19.1377 5.75 18.9997V16.9997Z"
+                                            fill="#36b4e5" />
+                                    </svg>
+                                </span>
+                                <p class="font-line">تصدير المعاملة</p>
+                            </button>
+                            <button  (click)="confirmationAction('refuse')" class="btn btn--danger btn--icon">
+                                <span class="icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M10 2.25C9.58579 2.25 9.25 2.58579 9.25 3V3.75H5C4.58579 3.75 4.25 4.08579 4.25 4.5C4.25 4.91421 4.58579 5.25 5 5.25H19C19.4142 5.25 19.75 4.91421 19.75 4.5C19.75 4.08579 19.4142 3.75 19 3.75H14.75V3C14.75 2.58579 14.4142 2.25 14 2.25H10Z"
+                                            fill="#36b4e5" />
+                                        <path
+                                            d="M13.0607 15L14.5303 16.4697C14.8232 16.7626 14.8232 17.2374 14.5303 17.5303C14.2374 17.8232 13.7626 17.8232 13.4697 17.5303L12 16.0607L10.5303 17.5303C10.2374 17.8232 9.76257 17.8232 9.46968 17.5303C9.17678 17.2374 9.17678 16.7626 9.46968 16.4697L10.9393 15L9.46967 13.5303C9.17678 13.2374 9.17678 12.7626 9.46967 12.4697C9.76256 12.1768 10.2374 12.1768 10.5303 12.4697L12 13.9393L13.4697 12.4697C13.7626 12.1768 14.2374 12.1768 14.5303 12.4697C14.8232 12.7626 14.8232 13.2374 14.5303 13.5303L13.0607 15Z"
+                                            fill="#36b4e5" />
+                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                            d="M5.99142 7.91718C6.03363 7.53735 6.35468 7.25 6.73684 7.25H17.2632C17.6453 7.25 17.9664 7.53735 18.0086 7.91718L18.2087 9.71852C18.5715 12.9838 18.5715 16.2793 18.2087 19.5446L18.189 19.722C18.045 21.0181 17.0404 22.0517 15.7489 22.2325C13.2618 22.5807 10.7382 22.5807 8.25108 22.2325C6.95954 22.0517 5.955 21.0181 5.81098 19.722L5.79128 19.5446C5.42846 16.2793 5.42846 12.9838 5.79128 9.71852L5.99142 7.91718ZM7.40812 8.75L7.2821 9.88417C6.93152 13.0394 6.93152 16.2238 7.2821 19.379L7.3018 19.5563C7.37011 20.171 7.84652 20.6612 8.45905 20.747C10.8082 21.0758 13.1918 21.0758 15.5409 20.747C16.1535 20.6612 16.6299 20.171 16.6982 19.5563L16.7179 19.379C17.0685 16.2238 17.0685 13.0394 16.7179 9.88417L16.5919 8.75H7.40812Z"
+                                            fill="#36b4e5" />
+                                    </svg>
+
+                                </span>
+                                <p class="font-line">رفض المعاملة</p>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="content-box">
+                    <div class="content-box__head">
+                        <h6>الباركود</h6>
+                        <div class="side">
+                            <div (click)="printQR()" class="btn btn--primary-light btn--icon-only">
+                                <span class="icon">
+                                    <svg height="512" viewBox="0 0 512 512" width="512" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M384,368h24a40.12,40.12,0,0,0,40-40V168a40.12,40.12,0,0,0-40-40H104a40.12,40.12,0,0,0-40,40V328a40.12,40.12,0,0,0,40,40h24" style="fill:none;stroke:#36b4e5;stroke-linejoin:round;stroke-width:32px"/>
+                                        <rect height="208" rx="24.32" ry="24.32" style="fill:none;stroke:#36b4e5;stroke-linejoin:round;stroke-width:32px" width="256" x="128" y="240"/>
+                                        <path d="M384,128V104a40.12,40.12,0,0,0-40-40H168a40.12,40.12,0,0,0-40,40v24" style="fill:none;stroke:#36b4e5;stroke-linejoin:round;stroke-width:32px"/>
+                                        <circle cx="392" cy="184" r="24"/>
+                                    </svg>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content-box__body">
+                        <div class="qr-box">
+                                <qr-code [value]="qr_link" size="300" errorCorrectionLevel="H" />
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="pageMode == 'inbox' || pageMode == 'outgoing'" class="content-box">
+                    <div class="content-box__head">
+                        <h6>تصدير المعاملة</h6>
+                    </div>
+                    <div class="content-box__body">
+                        <div class="transfer-transaction">
+                            <form [formGroup]="actionOnTransactionForm" class="transfer-transaction__form">
+                                <div *ngFor="let field of transferTransactionControls">
+                                    <app-dropdown *ngIf="field.type == 'dropdown'" [field]="field" [formGroup]="actionOnTransactionForm"></app-dropdown>
+                                    <!-- <app-input-text *ngIf="field.type == 'textbox'" [field]="field" [formGroup]="actionOnTransactionForm"></app-input-text> -->
+                                </div>
+                                <button (click)="confirmationAction('transfer')" [disabled]="actionOnTransactionForm.invalid" class="btn btn--primary">
+                                    <p class="font-line">تصدير المعاملة</p>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="pageMode == 'refused'" class="content-box">
+                    <div class="content-box__head">
+                        <h6>إحالة المعاملة وإرسال نسخ</h6>
+                    </div>
+                    <div class="content-box__body">
+                        <form [formGroup]="copyAndTransferForm" class="transfer-transaction__form">
+                            <div *ngFor="let field of copyAndTransferControls">
+                                <app-multi-select *ngIf="field.type == 'multiSelect'" (dropdownValue)="changeDropdown($event)" [formGroup]="copyAndTransferForm" [field]="field"></app-multi-select>
+                                <app-dropdown *ngIf="field.type == 'dropdown'" [field]="field" [formGroup]="copyAndTransferForm"></app-dropdown>
+                            </div>
+                            <button (click)="copyAndTransfer()" [disabled]="copyAndTransferForm.invalid" class="btn btn--primary btn--full-width mt-20">
+                                <p class="font-line">إحالة المعاملة وإرسال نسخ</p>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                <div *ngIf="pageMode == 'copied' || userPermissions.includes('add_copy_transaction_from_create')" class="content-box">
+                    <div class="content-box__head">
+                        <h6>نسخ المعاملة</h6>
+                    </div>
+                    <div class="content-box__body">
+                        <app-multi-select 
+                            (dropdownValue)="changeDropdown($event)" *ngIf="topicCopies.type == 'multiSelect'"
+                            [field]="topicCopies"></app-multi-select>
+                            <button style="margin-top: 25px;" (click)="sendCopies()" [disabled]="copiesValues.length == 0" class="btn btn--primary">
+                                <p class="font-line">إرسال النسخ</p>
+                            </button>
+                    </div>
+                </div>
+                <div class="content-box">
+                    <div class="content-box__head">
+                        <h6>المعاملات المتربطة</h6>
+                    </div>
+                    <div class="content-box__body">
+                        <div class="linked-trnasactions">
+                            <p (click)="openLinkedTransaction(transactionData?.parentTransactionNumber)"  class="linked-trnasactions__one" *ngIf="transactionData?.parentTransactionNumber">{{transactionData?.parentTransactionNumber}} - {{transactionData?.parentTransactionTopic}}</p>
+                            <p *ngIf="!transactionData?.parentTransactionNumber">لا يوجد ربط ما بين هذه المعاملة ومعاملة اخرى</p>
+                        </div>    
+                    </div>
+                </div>
+                <div class="content-box">
+                    <div class="content-box__head">
+                        <h6>تاريخ المعاملة</h6>
+                    </div>
+                    <div class="content-box__body">
+                        <div *ngIf="transactionData?.logs.length > 0" class="topic-history">
+                            <div *ngFor="let item of transactionData?.logs" class="topic-history__one">
+                                <!-- <p>{{SharedService.transformDateFormat(item.date)}}</p> -->
+                                <p>{{item.date | date:'medium'}}</p>
+                                <span>{{item.log}}</span>
+                            </div>
+                        </div>
+                        <div *ngIf="transactionData?.logs.length == 0" class="topic-history">
+                            <p>لا يوجد تاريخ لهذه المعاملة</p>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<p-confirmDialog [style]="{ width: '25rem'}" #cd>
+    <ng-template aria-keyshortcuts="action" pTemplate="message" let-message>
+        <div class="confirmation-wrap">
+            <h4 class="title">إتخاذ إجراء</h4>
+            <p class="message">هل أنت متأكد من إتخاذ هذا إلإجراء ؟</p>
+            <div class="buttons">
+                <button (click)="cd.accept()" class="btn btn--primary"><p class="font-line">تنفيذ</p></button>
+                <button (click)="cd.reject()" class="btn btn--danger"><p class="font-line">إلغاء</p></button>
+            </div>
+        </div>
+    </ng-template>
+</p-confirmDialog>
+
+
+

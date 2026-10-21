@@ -1,0 +1,5 @@
+<div class="control-box" [ngClass]="{'control-box--icon':field.icon}" [formGroup]="formGroup" *ngIf="formGroup">
+    <label *ngIf="field.label"><p *ngIf="field.isRequired">*</p>{{field.label}}</label>
+    <p-calendar (ngModelChange)="datePickerValue($event)" dataType="string" dateFormat="yy-mm-dd" [ngClass]="field.class" ngDefaultControl [showIcon]="true"  [formControlName]="field.name" [attr.disabled]="field.readonly"  />
+    <p *ngIf="formGroup.controls[field.name].errors?.['required'] && formGroup.controls[field.name].touched" class="control-box__error">هذا الحقل مطلوب</p>
+</div>

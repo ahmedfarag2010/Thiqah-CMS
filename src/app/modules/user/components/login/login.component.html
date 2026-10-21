@@ -1,0 +1,16 @@
+<div class="user-box">
+    <div class="user-box__content">
+        <div class="user-box__logo">
+            <img src="/assets/images/app-logo.png"/>
+        </div>
+        <h4>تسجيل الدخول لنظام الإتصالات الإدارية</h4>
+        <form [formGroup]="loginForm" class="user-box__form">
+            <ng-container *ngFor="let field of loginControls">
+                <app-input-text [field]="field" [formGroup]="loginForm"></app-input-text>
+            </ng-container>
+            <button (click)="login(loginForm.value)" class="btn btn--secondary">
+                <p  class="font-line">تسجيل دخول</p>
+            </button>
+        </form>
+    </div>
+</div>

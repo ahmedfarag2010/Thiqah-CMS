@@ -1,0 +1,57 @@
+<div
+  class="file-upload-wrapper"
+  [class.success]="uploadSuccess"
+  [class.error]="uploadError"
+  (drop)="onFileDrop($event)"
+  (dragover)="onDragOver($event)"
+>
+  <input
+    type="file"
+    
+    (change)="onFileChange($event)"
+    hidden
+    #fileInput
+    multiple="multiple"
+  />
+  <div class="file-dropper">
+    <div class="file-dropper__icon" (click)="fileInput.click()">
+        <span class="icon">
+            <svg fill="none" height="48" viewBox="0 0 48 48" width="48" xmlns="http://www.w3.org/2000/svg"><path d="M24 43.9998H10C8.89543 43.9998 8 43.1043 8 41.9998V5.99977C8 4.8952 8.89543 3.99977 10 3.99977H38C39.1046 3.99977 40 4.8952 40 5.99977V23.9998" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"/><path d="M35.5 43.9998V30.9998" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"/><path d="M31 34.4998L32.5 32.9998L35.5 29.9998L38.5 32.9998L40 34.4998" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"/><path d="M16 15.9998H32" stroke="black" stroke-linecap="round" stroke-width="4"/><path d="M16 23.9998H24" stroke="black" stroke-linecap="round" stroke-width="4"/></svg>
+        </span>
+        <p>إضفط لتحميل ملف من جهازك</p>
+        <div class="allowed">
+          <span>إمتدادات الملفات المدعومة : </span>
+          <div>
+            <span *ngFor="let item of allowedFiles">{{item}}</span>
+          </div>
+        </div>
+    </div>
+    <div *ngIf="selectedFiles && selectedFiles.length > 0" class="uploadedFiles">
+        <p>الملفات المرفوعة</p>
+        <div *ngFor="let file of selectedFiles;let i = index" class="uploadedFiles__file">
+            <div>
+                <img src="{{file.imagePreview}}"/>
+                <p>{{file.fileName}} - {{file.fileSize}}KB</p>
+            </div>
+            <span (click)="removeFile(i)" class="icon">
+                <svg enable-background="new 0 0 32 32" height="32px"  version="1.1" viewBox="0 0 32 32" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M17.459,16.014l8.239-8.194c0.395-0.391,0.395-1.024,0-1.414c-0.394-0.391-1.034-0.391-1.428,0  l-8.232,8.187L7.73,6.284c-0.394-0.395-1.034-0.395-1.428,0c-0.394,0.396-0.394,1.037,0,1.432l8.302,8.303l-8.332,8.286  c-0.394,0.391-0.394,1.024,0,1.414c0.394,0.391,1.034,0.391,1.428,0l8.325-8.279l8.275,8.276c0.394,0.395,1.034,0.395,1.428,0  c0.394-0.396,0.394-1.037,0-1.432L17.459,16.014z" fill="#121313" id="Close"/><g/><g/><g/><g/><g/><g/></svg>
+            </span>
+        </div>
+    </div>
+    <!-- <div *ngIf="imageName()">
+      <div *ngIf="selectedFile || imagePreview">
+        <img
+          [src]="imagePreview()"
+          alt="Image Preview"
+          class="image-preview"
+        />
+        <p>
+          <span class="image-name">{{ imageName() }}</span> ({{
+            fileSize()
+          }} KB)
+        </p>
+        <span class="delete-icon" (click)="removeImage()">delete</span>
+      </div>
+    </div> -->
+  </div>
+</div>

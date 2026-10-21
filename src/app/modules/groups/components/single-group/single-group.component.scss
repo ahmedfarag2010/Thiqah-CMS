@@ -1,0 +1,47 @@
+@import "../../../../../scss/variables";
+@import "../../../../../scss/fonts";
+
+.group-details{
+    display: flex;
+    flex-direction: column;
+    &__info{
+        display: flex;
+        border: 1px solid $gray;
+        flex-wrap: wrap;
+        padding: 0 30px;
+        border-radius: 5px;
+        padding-bottom: 25px;
+    }
+    &__property{
+        margin-top: 25px;
+        // margin-bottom: 25px;
+        min-width: 25%;
+        max-width: 25%;
+       
+        span{
+            color: $text-gray;
+            font-size: 19px;
+            font-family: TanseekModern-bold;
+            font-weight: bold;
+            letter-spacing: 0;
+        }
+        p{
+            font-family: TanseekModern-bold;
+            font-weight: bold;
+            letter-spacing: 0;
+            font-size: 24px;
+        }
+        &--lg{
+            min-width: 100%;
+            max-width: none;
+        }
+    }
+    @media (max-width:767px){
+        .group-details{
+            &__property{
+                min-width: 50%;
+                max-width: 50%;
+            }
+        }
+    }
+}

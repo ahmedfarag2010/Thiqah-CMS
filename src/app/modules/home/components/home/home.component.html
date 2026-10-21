@@ -1,0 +1,54 @@
+<div class="layout layout--full layout--home">
+    <div class="layout__main">
+        <div class="main-title">
+            <h1>نظام الإتصالات الإدارية</h1>
+            <p>إحصائيات الإدارة</p>
+        </div>
+        <div class="container">
+            
+            <div class="pending-transactions">
+                
+                <div class="pending-transactions__data">
+                    <app-no-data *ngIf="data_table.data.length == 0"></app-no-data>
+                    <app-data-table *ngIf="data_table.data.length > 0" [isSearch]="false" [data_table]="data_table" (clickedRow)="selectedRow($event)"></app-data-table>
+                     <!-- <div *ngFor="let item of data_table.data">{{item.topic}}</div> -->
+                </div>
+                <div class="pending-transactions__calendar">
+                    <full-calendar [options]="calendarOptions"></full-calendar>
+                </div>
+            </div>
+            <div class="home-wrap">
+                <div class="home-wrap__col">
+                    <div (click)="routeSection('inbox')" class="main-progress">
+                        <div class="main-progress__number">
+                            <p class="font-line">{{tranasactionsCounts?.incomingCount}}</p>
+                        </div>
+                        <h5>معاملات واردة</h5>
+                    </div>
+                    <div (click)="routeSection('refused')" class="main-progress">
+                        <div class="main-progress__number">
+                            <p class="font-line">{{tranasactionsCounts?.refusedCount}}</p>
+                        </div>
+                        <h5>معاملات مرفوضة</h5>
+                    </div>
+                    <div (click)="routeSection('transferred')" class="main-progress">
+                        <div class="main-progress__number">
+                            <p class="font-line">{{tranasactionsCounts?.createdCount}}</p>
+                        </div>
+                        <h5>معاملات محالة</h5>
+                    </div>
+                </div>
+                <div class="home-wrap__col">
+                    <div class="charts-box">
+                        <div class="charts-box__title">
+                            <h6>المعاملات حسب الشهور</h6>
+                        </div>
+                        <div class="charts-box__content">
+                            <app-months-charts></app-months-charts>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

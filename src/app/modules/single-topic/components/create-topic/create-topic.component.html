@@ -1,0 +1,255 @@
+<div class="layout">
+    <div class="container">
+        <div class="sub-title">
+            <a (click)="back()" class="btn btn--tertiary btn--icon">
+                <span class="icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M13.4697 8.53033C13.1768 8.23744 13.1768 7.76256 13.4697 7.46967C13.7626 7.17678 14.2374 7.17678 14.5303 7.46967L18.5303 11.4697C18.8232 11.7626 18.8232 12.2374 18.5303 12.5303L14.5303 16.5303C14.2374 16.8232 13.7626 16.8232 13.4697 16.5303C13.1768 16.2374 13.1768 15.7626 13.4697 15.4697L16.1893 12.75H6.5C6.08579 12.75 5.75 12.4142 5.75 12C5.75 11.5858 6.08579 11.25 6.5 11.25H16.1893L13.4697 8.53033Z"
+                            fill="white" />
+                    </svg>
+                </span>
+                <p class="font-line">إلغاء المعاملة</p>
+            </a>
+        </div>
+        <div class="flex">
+            <div class="layout__main">
+                <div class="create-topic">
+                    <form [formGroup]="createTopicForm" class="create-topic__form">
+                        <div class="content-box">
+                            <div class="content-box__head">
+                                <h6>البيانات الرئيسية للمعاملة</h6>
+                            </div>
+                            <div class="content-box__body">
+                                <div class="row">
+                                    <div *ngFor="let field of topicDetailsControls" class="col-lg-{{field.cols}} col-md-6">
+                                        <app-input-text *ngIf="field.type == 'textbox'" [field]="field"
+                                            [formGroup]="createTopicForm"></app-input-text>
+                                        <app-dropdown (dropdownValue)="getDropdownValue($event)"
+                                            *ngIf="field.type == 'dropdown'" [field]="field"
+                                            [formGroup]="createTopicForm"></app-dropdown>
+                                        <app-datepicker *ngIf="field.type == 'datepicker'" [field]="field"
+                                            [formGroup]="createTopicForm"></app-datepicker>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="content-box">
+                            <ng-container *ngFor="let field of titleControl">
+                                <app-input-text [field]="field" [formGroup]="createTopicForm"></app-input-text>
+                            </ng-container>
+                            <div class="content-box__head">
+                                <h6>المرسل إليه</h6>
+                            </div>
+                            <div class="content-box__body">
+                                <div class="row">
+                                    <div *ngFor="let field of sendToControls" class="col-lg-{{field.cols}} col-md-6">
+                                        <app-dropdown (dropdownValue)="getDropdownValue($event)" [field]="field"
+                                            [formGroup]="createTopicForm"></app-dropdown>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="content-box">
+                            <div class="content-box__head">
+                                <h6>بيانات أخرى</h6>
+                            </div>
+                            <div class="content-box__body">
+                                <div class="row">
+                                    <div *ngFor="let field of otherDetailsControls" class="col-lg-{{field.cols}} col-md-6">
+                                        <app-input-text *ngIf="field.type == 'textbox'" [field]="field"
+                                            [formGroup]="createTopicForm"></app-input-text>
+                                        <app-dropdown (dropdownValue)="getDropdownValue($event)"
+                                            *ngIf="field.type == 'dropdown'" [field]="field"
+                                            [formGroup]="createTopicForm"></app-dropdown>
+                                        <app-datepicker *ngIf="field.type == 'datepicker'" [field]="field"
+                                            [formGroup]="createTopicForm"></app-datepicker>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+                        <div *ngIf="isExportMode" class="content-box">
+                            <div class="content-box__head">
+                                <h6>المرفقات</h6>
+                            </div>
+                            <div class="content-box__body">
+                                <div *ngIf="transactionData?.files.length > 0" class="row">
+                                    <div *ngFor="let item of transactionData?.files" class="col-md-4">
+                                        <div (click)="downloadAttachment(item.id)" class="attachment-item">
+                                            <span class="icon">
+                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M14.0315 13.1643C14.355 12.9056 14.8269 12.958 15.0857 13.2815C15.3444 13.6049 15.292 14.0769 14.9685 14.3357L12.4746 16.3308C12.3459 16.4361 12.1816 16.4994 12.0025 16.5L12.0001 16.5L11.9937 16.5C11.8177 16.4985 11.6561 16.4364 11.5288 16.3335L9.03151 14.3357C8.70806 14.0769 8.65562 13.6049 8.91438 13.2815C9.17313 12.958 9.6451 12.9056 9.96855 13.1643L11.2501 14.1896V10.75C11.2501 10.3358 11.5858 10 12.0001 10C12.4143 10 12.7501 10.3358 12.7501 10.75V14.1895L14.0315 13.1643Z"
+                                                        fill="white" />
+                                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                                        d="M7 2.25C5.48122 2.25 4.25 3.48122 4.25 5V19C4.25 20.5188 5.48122 21.75 7 21.75H17C18.5188 21.75 19.75 20.5188 19.75 19V8.1979C19.75 7.83178 19.6352 7.47488 19.4217 7.17745L16.4085 2.97955C16.0798 2.52157 15.5506 2.25 14.9868 2.25H7ZM5.75 5C5.75 4.30964 6.30964 3.75 7 3.75H14.25V8.14705C14.25 8.56126 14.5858 8.89705 15 8.89705H18.25V19C18.25 19.6904 17.6904 20.25 17 20.25H7C6.30964 20.25 5.75 19.6904 5.75 19V5Z"
+                                                        fill="white" />
+                                                </svg>
+                                            </span>
+                                            <p class="font-line">{{item.name}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p *ngIf="transactionData?.files.length == 0">لم يتم إرفاق ملفات لهذه المعاملة</p>
+                            </div>
+                        </div>
+                        <div class="content-box">
+                            <div class="content-box__head">
+                                <h6>المرفقات</h6>
+                            </div>
+                            <div class="content-box__body">
+                                <div class="row">
+                                    <div *ngFor="let field of attachmentsControls" class="col-lg-{{field.cols}}">
+                                        <app-upload-files (uploadedFilesValue)="attachmentsValue($event,field.name)"
+                                            *ngIf="field.type == 'fileupload'" [field]="field"
+                                            [formGroup]="createTopicForm"></app-upload-files>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <p (click)="submit(createTopicForm.value)">test</p> -->
+                    </form>
+                </div>
+            </div>
+            <div class="layout__aside">
+                <div class="content-box content-box--primary">
+                    <div class="content-box__head">
+                        <h6>{{isExportMode ? 'تصدير المعاملة' : 'إرسال المعاملة'}}</h6>
+                    </div>
+                    <div class="content-box__body">
+                        <div class="buttons-holder">
+                            <button (click)="confirmationSubmit()" [disabled]="createTopicForm.invalid"
+                                class="btn btn--secondary btn--icon">
+                                <span class="icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                            d="M5.25474 3.72368C5.15551 2.53224 6.4904 1.87351 7.40671 2.48563L7.70312 2.68364C12.2227 5.70288 16.4526 9.11021 20.3414 12.8644C21.3101 13.7997 20.4558 15.2756 19.247 15.1462L13.9807 14.5822C13.4445 14.5248 12.9504 14.813 12.7469 15.262L10.6182 19.959C10.1041 21.0934 8.41076 20.988 8.07382 19.7641C6.65905 14.6249 5.72522 9.37274 5.28368 4.07117L5.25474 3.72368ZM6.77173 3.86536L6.77851 3.94668C7.20129 9.02307 8.08349 14.0536 9.41488 18.9804L11.3806 14.6429C11.8611 13.5827 12.9845 12.9669 14.1404 13.0907L18.9474 13.6055C15.2205 10.0471 11.1794 6.80983 6.86989 3.93093L6.77173 3.86536Z"
+                                            fill="white" />
+                                    </svg>
+                                </span>
+                                <p class="font-line">{{isExportMode ? 'تصدير المعاملة' : 'إرسال المعاملة'}}</p>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="content-box">
+                    <div class="content-box__head">
+                        <h6>نسخ المعاملة</h6>
+                    </div>
+                    <div *ngIf="!isExportMode" class="content-box__body">
+                        <app-multi-select 
+                            (dropdownValue)="changeDropdown($event)" *ngIf="topicCopies.type == 'multiSelect'"
+                            [field]="topicCopies"></app-multi-select>
+                    </div>
+                    <div *ngIf="isExportMode && transactionData?.groups.length > 0" class="content-box__body">
+                        <span>سيتم ارسال هذه المعاملة للصندوق الصادر</span>
+                        <div style="color: #36b4e5;" *ngFor="let item of transactionData?.groups">{{item?.name}}</div>
+                    </div>
+                    <div *ngIf="isExportMode && transactionData?.groups.length == 0" class="content-box__body">
+                        <span>لم يتم إرسال نسخ لهذه المعاملة</span>
+                    </div>
+                </div>
+                <div class="content-box">
+                    <div class="content-box__head">
+                        <h6>طباعة النموذج</h6>
+                    </div>
+                    <div class="content-box__body">
+                        <div class="buttons-holder">
+                            <!-- <a href="#" class="btn btn--tertiary btn--icon">
+                                <span class="icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                            d="M5.25474 3.72368C5.15551 2.53224 6.4904 1.87351 7.40671 2.48563L7.70312 2.68364C12.2227 5.70288 16.4526 9.11021 20.3414 12.8644C21.3101 13.7997 20.4558 15.2756 19.247 15.1462L13.9807 14.5822C13.4445 14.5248 12.9504 14.813 12.7469 15.262L10.6182 19.959C10.1041 21.0934 8.41076 20.988 8.07382 19.7641C6.65905 14.6249 5.72522 9.37274 5.28368 4.07117L5.25474 3.72368ZM6.77173 3.86536L6.77851 3.94668C7.20129 9.02307 8.08349 14.0536 9.41488 18.9804L11.3806 14.6429C11.8611 13.5827 12.9845 12.9669 14.1404 13.0907L18.9474 13.6055C15.2205 10.0471 11.1794 6.80983 6.86989 3.93093L6.77173 3.86536Z"
+                                            fill="white" />
+                                    </svg>
+                                </span>
+                                <p class="font-line">نسخ المعاملة</p>
+                            </a> -->
+                            <button (click)="printRecievingModel()" class="btn btn--tertiary btn--icon">
+                                <span class="icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M17.7501 11.0005C17.0597 11.0005 16.5001 11.5601 16.5001 12.2505C16.5001 12.9408 17.0597 13.5005 17.7501 13.5005C18.4404 13.5005 19.0001 12.9408 19.0001 12.2505C19.0001 11.5601 18.4404 11.0005 17.7501 11.0005Z"
+                                            fill="white" />
+                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                            d="M4.1732 8.11578L6.25006 7.88494V3.91348C6.25006 3.27019 6.74012 2.73282 7.38068 2.67369C10.4537 2.39002 13.5464 2.39002 16.6194 2.67369C17.26 2.73282 17.7501 3.27019 17.7501 3.91348V7.88494L19.827 8.11578C20.5933 8.20096 21.2255 8.75438 21.4113 9.50269C21.9771 11.7815 21.9771 14.1642 21.4113 16.443L21.228 17.1812C21.1449 17.5156 20.8447 17.7505 20.5001 17.7505H17.7501V20.0835C17.7501 20.7055 17.2787 21.2263 16.6597 21.2882C13.561 21.5981 10.4391 21.5981 7.34037 21.2882C6.72142 21.2263 6.25006 20.7055 6.25006 20.0835V17.7505H3.50009C3.15548 17.7505 2.85523 17.5156 2.77219 17.1812L2.5889 16.443C2.0231 14.1642 2.0231 11.7815 2.5889 9.50269C2.7747 8.75438 3.40688 8.20096 4.1732 8.11578ZM16.2501 7.74003C13.4215 7.50808 10.5786 7.50808 7.75006 7.74003V4.14652C10.578 3.89908 13.4221 3.89908 16.2501 4.14652V7.74003ZM16.2501 16.5021C16.2482 16.3442 16.147 16.2082 16.0034 16.1574C13.3397 15.9212 10.6604 15.9212 7.9968 16.1574C7.85183 16.2086 7.75009 16.3467 7.75009 16.5065V17.0005L7.75006 17.0067V19.821C10.5771 20.0872 13.423 20.0872 16.2501 19.821V16.5021ZM19.9135 16.2505H17.7501V15.9175C17.7501 15.2954 17.2787 14.7746 16.6597 14.7127C16.5243 14.6991 16.3889 14.6862 16.2534 14.6738C16.1966 14.6623 16.1388 14.6533 16.0802 14.647C13.368 14.3548 10.6322 14.3548 7.91998 14.647C7.86135 14.6533 7.8036 14.6623 7.74684 14.6738C7.61131 14.6862 7.47582 14.6991 7.34037 14.7127C6.72142 14.7746 6.25006 15.2954 6.25006 15.9175V16.2505H4.08664L4.0447 16.0815C3.53783 14.0401 3.53783 11.9056 4.0447 9.86415C4.0792 9.72519 4.1966 9.62242 4.3389 9.6066L6.42123 9.37516C10.1291 8.96304 13.8711 8.96304 17.5789 9.37516L19.6613 9.6066C19.8036 9.62242 19.921 9.72519 19.9555 9.86415C20.4623 11.9056 20.4623 14.0401 19.9555 16.0815L19.9135 16.2505Z"
+                                            fill="white" />
+                                    </svg>
+                                </span>
+                                <p class="font-line">طباعة نموذج التسليم</p>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="content-box">
+                    <div class="content-box__head">
+                        <h6>ربط المعاملة</h6>
+                    </div>
+                    <div *ngIf="!isExportMode" class="content-box__body">
+                        <app-input-text (onPressEnter)="searchText($event.target.value)"
+                            [field]="search"></app-input-text>
+                        <div class="link-transactions">
+                            <ng-container *ngIf="transactionsList.length > 0">
+                                <div [ngClass]="{'selected':item.isSelected}" (click)="selectTransaction(item)" *ngFor="let item of transactionsList" class="link-transactions__one">
+                                    <p>{{item?.registrationNumber}} - {{item?.topic}}</p>
+                                    <span *ngIf="item.isSelected" class="icon">
+                                        <svg enable-background="new 0 0 256 256" height="256px" id="Layer_1" version="1.1" viewBox="0 0 256 256" width="256px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M98.131,211.199c-1.521,0-3-0.541-4.165-1.541l-59.731-51.2c-2.685-2.3-2.994-6.34-0.693-9.024  c2.3-2.682,6.347-2.991,9.024-0.694L97.2,195.571L212.547,47.271c2.172-2.79,6.197-3.29,8.981-1.125  c2.79,2.172,3.294,6.194,1.125,8.981L103.185,208.728c-1.075,1.381-2.669,2.262-4.409,2.44  C98.56,211.189,98.344,211.199,98.131,211.199z"/></svg>
+                                    </span>
+                                </div>
+                            </ng-container>
+                            <p *ngIf="transactionsList.length == 0">لا يوجد نتائج للبحث عن معاملة</p>
+                        </div>
+                    </div>
+                    <div *ngIf="isExportMode" class="content-box__body">
+                        <span>سيتم الربط مع هذه المعاملة</span>
+                        <div (click)="openLinkedTransaction(transactionData?.registrationNumber)" style="color: #36b4e5;">{{transactionData?.registrationNumber}} - {{transactionData?.topic}}</div>
+                    </div>
+                </div>
+                <div id="qr-print" class="content-box">
+                    <div class="content-box__head">
+                        <h6>الباركود </h6>
+                        <div *ngIf="isShowQR" class="side">
+                            <div (click)="printQR()" class="btn btn--primary-light btn--icon-only">
+                                <span class="icon">
+                                    <svg height="512" viewBox="0 0 512 512" width="512" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M384,368h24a40.12,40.12,0,0,0,40-40V168a40.12,40.12,0,0,0-40-40H104a40.12,40.12,0,0,0-40,40V328a40.12,40.12,0,0,0,40,40h24" style="fill:none;stroke:#36b4e5;stroke-linejoin:round;stroke-width:32px"/>
+                                        <rect height="208" rx="24.32" ry="24.32" style="fill:none;stroke:#36b4e5;stroke-linejoin:round;stroke-width:32px" width="256" x="128" y="240"/>
+                                        <path d="M384,128V104a40.12,40.12,0,0,0-40-40H168a40.12,40.12,0,0,0-40,40v24" style="fill:none;stroke:#36b4e5;stroke-linejoin:round;stroke-width:32px"/>
+                                        <circle cx="392" cy="184" r="24"/>
+                                    </svg>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content-box__body">
+                        <div *ngIf="isShowQR" class="qr-box">
+                            <qr-code [value]="qr_link" size="300" errorCorrectionLevel="H" />
+                            <p>رقم المعاملة <span *ngIf="regId">- ({{regId}})</span></p>
+                        </div>
+                        <p *ngIf="!isShowQR">قم بإختيار نوع المعاملة أولاً</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<p-confirmDialog [style]="{ width: '25rem'}" #cd>
+    <ng-template pTemplate="message" let-message>
+        <div class="confirmation-wrap">
+            <h4 class="title">إرسال المعاملة</h4>
+            <p class="message">هل أنت متأكد من إرسال المعاملة ؟</p>
+            <div class="buttons">
+                <button (click)="cd.accept()" class="btn btn--primary"><p class="font-line">إرسال</p></button>
+                <button (click)="cd.reject()" class="btn btn--danger"><p class="font-line">إلغاء</p></button>
+            </div>
+        </div>
+    </ng-template>
+</p-confirmDialog>

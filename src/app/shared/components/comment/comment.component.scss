@@ -1,0 +1,38 @@
+@import "../../../../scss/variables";
+
+
+.comments-wrap{
+    display: flex;
+    flex-direction: column;
+}
+.comment-box{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid $gray;
+    &__info{
+        display: flex;
+        align-items: center;
+        color: $text-gray;
+        p{
+            margin: 0 5px;
+            color: $primary;
+            font-size: 18px;
+        }
+        span{
+            display: inline-flex;
+            margin: 0 5px;
+            color: $text-gray;
+            font-size: 18px;
+        }
+    }
+    .text{
+        margin-top: 10px;
+    }
+    &:last-of-type{
+        border-bottom: 0;
+        padding-bottom: 0;
+        margin-bottom: 0;
+    }
+}

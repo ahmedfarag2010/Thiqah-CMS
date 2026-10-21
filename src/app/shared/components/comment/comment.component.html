@@ -1,0 +1,15 @@
+<div class="comments-wrap">
+    <p style="margin-bottom: 15px;" *ngIf="comments && comments.length == 0">لا يوجد ملاحظات على هذه المعاملة</p>
+    <div *ngFor="let item of comments" class="comment-box">
+        <div class="comment-box__info">
+            <span><span style="color: #36b4e5;">{{item?.groupName}}</span> - {{item?.date | date:'medium'}}</span>
+        </div>
+        <p class="text font-line">{{item?.log}}</p>
+    </div>
+    <div *ngIf="isWrite" class="comments-wrap__write">
+        <h6>كتابة ملاحظات</h6>
+        <form [formGroup]="addCommentForm" class="comments-wrap__form">
+            <app-input-text [formGroup]="addCommentForm" [field]="commentControl"></app-input-text>
+        </form>
+    </div>
+</div>

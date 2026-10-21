@@ -1,0 +1,136 @@
+// .settings-box{
+//     display: flex;
+//     flex-direction: column;
+//     &__one{
+//         display: flex;
+//         flex-direction: column;
+//     }
+//     &__sub-title{
+//         margin-top: 20px;
+//         h6{
+//             font-size: 24px;
+//         }
+//     }
+//     &__content{
+//         display: flex;
+//         align-items: end;
+//         margin-top: 10px;
+//         padding-bottom: 25px;
+//         border-bottom: 1px solid #cfcfcf;
+//         app-dropdown{
+//             flex-grow: 1;
+//         }
+//         .buttons-holder{
+//             // margin-right: 15px;
+//             width: 400px;
+//             display: flex;
+//             flex-direction: initial;
+//             .btn{
+//                 margin-right: 15px;
+//                 margin-bottom: 0;
+//             }
+//         }
+//     }
+// }
+@import "../../../../../scss/variables";
+
+.list-of-values{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: $white;
+    padding: 20px;
+    border-radius: 10px;
+    
+    margin-bottom: 30px;
+    height: 260px;
+    .icon{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        background: $light-gray;
+        svg, svg path{
+            width: 40px !important;
+            height: 40px !important;
+        }
+    }
+    &__nested{
+        margin: 15px 0;
+    }
+    &__data{
+        cursor: pointer;
+        // margin-top: 25px;
+        h6{
+            transition: 0.2s;
+        }
+    }
+    &:hover{
+        .list-of-values{
+            &__data{
+                h6{
+                    color: $primary;
+                }
+            }
+        }
+    }
+    &.disabled{
+        background: #f3f3f3;
+    }
+}
+
+.options-list{
+    display: flex;
+    flex-direction: column;
+    border: 1px solid $gray;
+    border-radius: 10px;
+    margin-top: 15px;
+    padding: 10px;
+    &__one{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        &:last-of-type{
+            margin-bottom: 0;
+        }
+        .input{
+            border: 1px solid #eee;
+            padding: 5px;
+            margin-left: 5px;
+            min-width: 350px;
+            &:disabled{
+                background: $white;
+                border:1px solid transparent;
+            }
+        }
+    }
+    &__input{
+        display: flex;
+        align-items: center;
+        &>.icon{
+            svg{
+                path{
+                    fill: $primary;
+                }
+            }
+        }
+        .confirm{
+            cursor: pointer;
+        }
+    }
+    &__actions{
+        display: flex;
+        align-items: center;
+        .icon{
+            cursor: pointer;
+        }
+        .edit{
+            margin-left: 10px;
+            position: relative;
+            top: 2px;
+        }
+    }
+}

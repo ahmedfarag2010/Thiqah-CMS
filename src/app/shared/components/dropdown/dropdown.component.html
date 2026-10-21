@@ -1,0 +1,12 @@
+<!-- FormBuilder Control -->
+<div class="control-box" [ngClass]="{'control-box--icon':field.icon,'readonly':field.readonly}" [formGroup]="formGroup" *ngIf="formGroup">
+    <label *ngIf="field.label"><p *ngIf="field.isRequired">*</p>{{field.label}}</label>
+    <p-dropdown (keydown.enter)="getSearchKeyword($event)" (onChange)="changeDropdown($event,field)"  [options]="field.options" [formControlName]="field.name"  [name]="field.name" [checkmark]="true" optionLabel="name" [readonly]="field.readonly" [showClear]="!field.readonly" placeholder="{{field.placeholder}}" [filter]="field.isSearchable" />
+    <p *ngIf="formGroup.controls[field.name].errors?.['required'] && formGroup.controls[field.name].touched" class="control-box__error">هذا الحقل مطلوب</p>
+</div>
+
+<!-- Standard Component -->
+<div class="control-box control-box--standalone" [ngClass]="{'control-box--icon':field.icon,'readonly':field.readonly}" *ngIf="!formGroup">
+    <label *ngIf="field.label"><p *ngIf="field.isRequired">*</p>{{field.label}}</label>
+    <p-dropdown (keydown.enter)="getSearchKeyword($event)"  (onChange)="changeDropdown($event,field)" [options]="field.options"  [name]="field.name" [checkmark]="true" optionLabel="name" [readonly]="field.readonly" [showClear]="!field.readonly" placeholder="{{field.placeholder}}" [filter]="field.isSearchable" />
+</div>

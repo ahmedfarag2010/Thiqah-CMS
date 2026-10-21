@@ -1,0 +1,16 @@
+<!-- FormBuilder Control -->
+<div class="control-box" [ngClass]="{'control-box--icon':field.icon}" [formGroup]="formGroup" *ngIf="formGroup">
+    <label *ngIf="field.label"><p *ngIf="field.isRequired">*</p>{{field.label}}</label>
+    <input [value]="field.value" [ngClass]="field.class" placeholder="{{field.placeholder}}" type="{{field.contentType ? field.contentType : 'text'}}" class="input" [formControlName]="field.name" [readOnly]="field.readOnly" [name]="field.name"/>
+    <span *ngIf="field.icon" class="icon" [innerHTML]="field.icon"></span>
+    <p *ngIf="formGroup.controls[field.name].errors?.['required'] && formGroup.controls[field.name].touched" class="control-box__error">هذا الحقل مطلوب</p>
+    <p *ngIf="formGroup.controls[field.name].errors?.['maxlength']" class="control-box__error">عدد الكلمات محددة</p>
+</div>
+
+<!-- Standard Component -->
+<div class="control-box control-box--standalone" [ngClass]="{'control-box--icon':field.icon}"  *ngIf="!formGroup">
+    <label *ngIf="field.label"><p *ngIf="field.isRequired">*</p>{{field.label}}</label>
+    <input (keyup.enter)="enteredValue($event)" (input)="typedValue($event)" [ngClass]="field.class" placeholder="{{field.placeholder}}" type="{{field.contentType ? field.contentType : 'text'}}" class="input" [readOnly]="field.readOnly" [name]="field.name"/>
+    <span *ngIf="field.icon" class="icon" [innerHTML]="field.icon"></span>
+    <!-- <p *ngIf="formGroup.controls[field.name].errors?.['required'] && formGroup.controls[field.name].touched" class="control-box__error">هذا الحقل مطلوب</p> -->
+</div>

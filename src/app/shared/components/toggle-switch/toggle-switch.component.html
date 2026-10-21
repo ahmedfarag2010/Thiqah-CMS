@@ -1,0 +1,6 @@
+
+<!-- Standard Component -->
+<div class="toggle-switch" *ngIf="!formGroup">
+    <span></span>
+    <p-toggleswitch [binary]="true" formControlName="isChecked" (onChange)="switch($event)" [(ngModel)]="isChecked" [disabled]="field.readOnly" [readOnly]="field.readOnly" [name]="field.name"/>
+</div>

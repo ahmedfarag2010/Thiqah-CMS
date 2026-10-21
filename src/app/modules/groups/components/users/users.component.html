@@ -1,0 +1,131 @@
+<div class="layout">
+    <div class="container">
+        <div class="sub-title">
+            <h5>{{groupDetails?.name}}</h5>
+        </div>
+        <div class="sub-title">
+            <a (click)="back()" class="btn btn--tertiary btn--icon">
+                <span class="icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M13.4697 8.53033C13.1768 8.23744 13.1768 7.76256 13.4697 7.46967C13.7626 7.17678 14.2374 7.17678 14.5303 7.46967L18.5303 11.4697C18.8232 11.7626 18.8232 12.2374 18.5303 12.5303L14.5303 16.5303C14.2374 16.8232 13.7626 16.8232 13.4697 16.5303C13.1768 16.2374 13.1768 15.7626 13.4697 15.4697L16.1893 12.75H6.5C6.08579 12.75 5.75 12.4142 5.75 12C5.75 11.5858 6.08579 11.25 6.5 11.25H16.1893L13.4697 8.53033Z"
+                            fill="white" />
+                    </svg>
+                </span>
+                <p class="font-line">عودة للمجموعة</p>
+            </a>
+        </div>
+        <div class="flex">
+            <div class="layout__main">
+                <div class="group-users group-details">
+                    <div class="content-box">
+                        <div class="content-box__head">
+                            <h6>إضافة أعضاء جدد</h6>
+                        </div>
+                        <div class="content-box__body">
+                            <app-input-text (onPressEnter)="searchText($event.target.value)" [field]="search"></app-input-text>
+                            <!-- <div *ngFor="let field of formControls" class="group-users__search">
+                                
+                                <app-dropdown (searchKeyword)="getDropdownSearch($event)" *ngIf="field.type == 'dropdown'" [field]="field"
+                                    [formGroup]="searchUser"></app-dropdown>
+                            </div> -->
+                        </div>
+
+                    </div>
+                    <div class="content-box">
+                        <div class="content-box__head">
+                            <!-- <h6>الأعضاء الجدد (16)</h6> -->
+                            <h6>نتائج البحث  ({{searchResult.length}})</h6>
+                        </div>
+                        <div class="content-box__body">
+                            <div *ngIf="searchResult.length > 0" class="group-details__members">
+                                <div *ngFor="let user of searchResult" class="member-box">
+                                    <div class="member-box__img">
+                                        <img
+                                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTN7yx5hKkcbEIbsPIONrJOi8b_q_WiXzTyQ&s" />
+                                    </div>
+                                    <div class="member-box__data">
+                                        <p>{{user?.firstName}} {{user?.lastName}}</p>
+                                        <span>{{user?.principal}}</span>
+                                    </div>
+                                    <div class="member-box__action">
+                                        <!-- <span (click)="actionUser(user,'remove')" *ngIf="user.isAdded" class="icon remove">
+                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M10 2.25C9.58579 2.25 9.25 2.58579 9.25 3V3.75H5C4.58579 3.75 4.25 4.08579 4.25 4.5C4.25 4.91421 4.58579 5.25 5 5.25H19C19.4142 5.25 19.75 4.91421 19.75 4.5C19.75 4.08579 19.4142 3.75 19 3.75H14.75V3C14.75 2.58579 14.4142 2.25 14 2.25H10Z"
+                                                    fill="#36b4e5" />
+                                                <path
+                                                    d="M13.0607 15L14.5303 16.4697C14.8232 16.7626 14.8232 17.2374 14.5303 17.5303C14.2374 17.8232 13.7626 17.8232 13.4697 17.5303L12 16.0607L10.5303 17.5303C10.2374 17.8232 9.76257 17.8232 9.46968 17.5303C9.17678 17.2374 9.17678 16.7626 9.46968 16.4697L10.9393 15L9.46967 13.5303C9.17678 13.2374 9.17678 12.7626 9.46967 12.4697C9.76256 12.1768 10.2374 12.1768 10.5303 12.4697L12 13.9393L13.4697 12.4697C13.7626 12.1768 14.2374 12.1768 14.5303 12.4697C14.8232 12.7626 14.8232 13.2374 14.5303 13.5303L13.0607 15Z"
+                                                    fill="#36b4e5" />
+                                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                                    d="M5.99142 7.91718C6.03363 7.53735 6.35468 7.25 6.73684 7.25H17.2632C17.6453 7.25 17.9664 7.53735 18.0086 7.91718L18.2087 9.71852C18.5715 12.9838 18.5715 16.2793 18.2087 19.5446L18.189 19.722C18.045 21.0181 17.0404 22.0517 15.7489 22.2325C13.2618 22.5807 10.7382 22.5807 8.25108 22.2325C6.95954 22.0517 5.955 21.0181 5.81098 19.722L5.79128 19.5446C5.42846 16.2793 5.42846 12.9838 5.79128 9.71852L5.99142 7.91718ZM7.40812 8.75L7.2821 9.88417C6.93152 13.0394 6.93152 16.2238 7.2821 19.379L7.3018 19.5563C7.37011 20.171 7.84652 20.6612 8.45905 20.747C10.8082 21.0758 13.1918 21.0758 15.5409 20.747C16.1535 20.6612 16.6299 20.171 16.6982 19.5563L16.7179 19.379C17.0685 16.2238 17.0685 13.0394 16.7179 9.88417L16.5919 8.75H7.40812Z"
+                                                    fill="#36b4e5" />
+                                            </svg>
+                                        </span> -->
+                                        <span (click)="actionUser(user,'add')" *ngIf="!user.isAdded" class="icon add">
+                                            <svg class="feather feather-user-plus" fill="none" height="24" stroke="#41c99d" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" x2="20" y1="8" y2="14"/><line x1="23" x2="17" y1="11" y2="11"/></svg>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <app-no-data *ngIf="searchResult.length == 0"></app-no-data>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layout__aside">
+                <div class="content-box">
+                    <div class="content-box__head">
+                        <h6>الأعضاء ({{groupDetails?.users.length}})</h6>
+                    </div>
+                    <div class="content-box__body">
+                        <div *ngIf="groupDetails?.users.length > 0" class="group-details__members group-details__members--column">
+                            <div *ngFor="let user of groupDetails?.users" class="member-box">
+                                <div class="member-box__img">
+                                    <img
+                                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTN7yx5hKkcbEIbsPIONrJOi8b_q_WiXzTyQ&s" />
+                                </div>
+                                <div class="member-box__data">
+                                    <p>{{user?.firstName}} {{user?.lastName}}</p>
+                                    <span>{{user?.email}}</span>
+                                </div>
+                                <div class="member-box__action">
+                                    <span (click)="actionUser(user,'remove')"  class="icon remove">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M10 2.25C9.58579 2.25 9.25 2.58579 9.25 3V3.75H5C4.58579 3.75 4.25 4.08579 4.25 4.5C4.25 4.91421 4.58579 5.25 5 5.25H19C19.4142 5.25 19.75 4.91421 19.75 4.5C19.75 4.08579 19.4142 3.75 19 3.75H14.75V3C14.75 2.58579 14.4142 2.25 14 2.25H10Z"
+                                                fill="#36b4e5" />
+                                            <path
+                                                d="M13.0607 15L14.5303 16.4697C14.8232 16.7626 14.8232 17.2374 14.5303 17.5303C14.2374 17.8232 13.7626 17.8232 13.4697 17.5303L12 16.0607L10.5303 17.5303C10.2374 17.8232 9.76257 17.8232 9.46968 17.5303C9.17678 17.2374 9.17678 16.7626 9.46968 16.4697L10.9393 15L9.46967 13.5303C9.17678 13.2374 9.17678 12.7626 9.46967 12.4697C9.76256 12.1768 10.2374 12.1768 10.5303 12.4697L12 13.9393L13.4697 12.4697C13.7626 12.1768 14.2374 12.1768 14.5303 12.4697C14.8232 12.7626 14.8232 13.2374 14.5303 13.5303L13.0607 15Z"
+                                                fill="#36b4e5" />
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                d="M5.99142 7.91718C6.03363 7.53735 6.35468 7.25 6.73684 7.25H17.2632C17.6453 7.25 17.9664 7.53735 18.0086 7.91718L18.2087 9.71852C18.5715 12.9838 18.5715 16.2793 18.2087 19.5446L18.189 19.722C18.045 21.0181 17.0404 22.0517 15.7489 22.2325C13.2618 22.5807 10.7382 22.5807 8.25108 22.2325C6.95954 22.0517 5.955 21.0181 5.81098 19.722L5.79128 19.5446C5.42846 16.2793 5.42846 12.9838 5.79128 9.71852L5.99142 7.91718ZM7.40812 8.75L7.2821 9.88417C6.93152 13.0394 6.93152 16.2238 7.2821 19.379L7.3018 19.5563C7.37011 20.171 7.84652 20.6612 8.45905 20.747C10.8082 21.0758 13.1918 21.0758 15.5409 20.747C16.1535 20.6612 16.6299 20.171 16.6982 19.5563L16.7179 19.379C17.0685 16.2238 17.0685 13.0394 16.7179 9.88417L16.5919 8.75H7.40812Z"
+                                                fill="#36b4e5" />
+                                        </svg>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <app-no-data *ngIf="groupDetails?.users.length == 0"></app-no-data>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<p-confirmDialog [style]="{ width: '25rem'}" #cd>
+    <ng-template pTemplate="message" let-message>
+        <div class="confirmation-wrap">
+            <h4 class="title">حذف عضو</h4>
+            <p class="message">هل أنت متأكد من حذف هذا العضو ؟</p>
+            <div class="buttons">
+                <button (click)="cd.accept()" class="btn btn--primary"><p class="font-line">حذف</p></button>
+                <button (click)="cd.reject()" class="btn btn--danger"><p class="font-line">إلغاء</p></button>
+            </div>
+        </div>
+    </ng-template>
+</p-confirmDialog>

@@ -1,0 +1,550 @@
+html,
+body,
+p,
+div,
+span,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+main,
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+*:focus {
+    outline: none;
+}
+
+span.icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.mt-20 {
+    margin-top: 20px;
+}
+
+
+/// primeNG table custom style
+/// 
+/// 
+.p-datatable-wrapper {
+    border-left: 1px solid $gray;
+    border-right: 1px solid $gray;
+    border-radius: 10px;
+    overflow: hidden;
+
+    .topic-status {
+        position: relative;
+        top: 2px;
+    }
+}
+
+
+p-table .p-datatable {
+    margin-bottom: 25px;
+}
+
+.p-datatable .p-datatable-thead>tr>th,
+.p-datatable .p-datatable-tbody>tr>td {
+    text-align: right !important;
+    padding: 10px;
+    padding-top: 5px;
+    height: 55px;
+    font-size: 20px;
+    cursor: pointer;
+
+    white-space: nowrap;
+    max-width: 30ch;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.p-datatable .p-datatable-tbody>tr {
+    color: $secondary;
+}
+
+.p-datatable .p-datatable-tbody>tr:hover {
+    background-color: #fafafa;
+}
+
+.p-datatable-thead {
+    margin-bottom: 15px;
+
+}
+
+.p-element.p-datatable-tbody {
+    margin-top: 15px;
+}
+
+
+.p-datatable .p-datatable-thead>tr>th {
+    background: $table-theme;
+    color: $white;
+
+    .p-element {
+        .p-sortable-column-icon {
+            color: $white;
+        }
+    }
+}
+
+app-data-table {
+    @media (max-width:1279px) {
+        overflow-x: scroll;
+        display: block;
+        max-width: calc(100vw - 30px);
+        .p-datatable {
+            width: 100%;
+            max-width: 100%;
+            overflow: scroll;
+            min-width: 1000px;
+        }
+    }
+}
+
+
+
+// DDL
+
+.ui-dropdown .ui-dropdown-label {
+    padding-left: 2em;
+}
+
+.ui-dropdown .ui-dropdown-trigger {
+    left: 0;
+}
+
+p-dropdown,
+p-multiselect {
+    display: flex;
+    width: 100%;
+
+    .p-dropdown,
+    .p-multiselect {
+        width: 100%;
+        height: 45px;
+        line-height: 38px;
+        padding-right: 10px;
+        position: relative;
+        border: 1px solid #dce3e9;
+
+        span {
+            font-size: 20px;
+            // color: #c0c7cd;
+        }
+
+        svg {
+            width: 15px;
+            height: 15px;
+        }
+
+        timesicon {
+            // position: absolute;
+            // left: 0;
+            // right: calc(100% - 50px);
+        }
+
+        .p-dropdown-clear-icon,
+        .p-multiselect-clear-icon {
+            right: unset;
+            left: 55px;
+            top: 16px;
+        }
+
+        .p-dropdown-panel,
+        .p-multiselect-panel {
+
+            .p-dropdown-filter-container,
+            .p-multiselect-filter-container {
+                position: relative;
+
+                searchicon {
+                    position: absolute;
+                    left: 40px;
+                    top: 12px;
+                }
+            }
+        }
+    }
+
+    &.ng-invalid.ng-touched {
+        .p-dropdown {
+            border: 1px solid $invalid;
+        }
+    }
+}
+
+.p-dropdown:not(.p-disabled).p-focus,
+.p-calendar:not(.p-calendar-disabled).p-focus>.p-inputtext {
+    box-shadow: none;
+}
+
+.p-multiselect,
+.p-dropdown {
+
+    .p-multiselect-label,
+    .p-dropdown-label {
+        font-size: 20px;
+    }
+
+    span {
+        margin-right: 5px;
+    }
+}
+
+.p-multiselect-items-wrapper {
+    padding: 5px !important;
+}
+
+.p-multiselect-header {
+    padding-right: 5px;
+}
+
+.p-multiselect-panel .p-multiselect-header .p-multiselect-filter-container .p-inputtext {
+    margin-right: 5px;
+}
+
+p-multiselect timesicon {
+    display: none;
+}
+
+
+
+// Calendar
+
+p-calendar {
+    position: relative;
+    text-align: left;
+    direction: ltr;
+
+    &>span {
+        display: flex;
+        width: 100% !important;
+
+        &>button {
+            border: 1px solid #dce3e9;
+
+            svg path {
+                fill: #6b7280;
+            }
+        }
+
+        &.p-calendar-disabled {
+            background: #fafafa;
+        }
+    }
+
+    .p-inputtext {
+        padding: 0 10px;
+        height: 45px;
+        line-height: 45px;
+        font-size: 18px;
+        border: 1px solid #dce3e9;
+        border-right: 0;
+    }
+
+    &.ng-invalid.ng-touched {
+        .p-inputtext {
+            border: 1px solid $invalid;
+            border-right: 0;
+        }
+
+        &>span {
+            &>button {
+                border: 1px solid $invalid;
+
+                svg path {
+                    fill: $invalid;
+                }
+            }
+        }
+    }
+}
+
+.p-datepicker table td>span {
+    width: 40px;
+    height: 40px;
+}
+
+.p-datepicker table th {
+    text-align: center;
+}
+
+
+// Toaster style
+
+.ng-trigger-toastAnimation {
+    .p-toast-message-content {
+        padding: 10px 10px;
+        display: flex;
+
+        .p-toast-message-icon {
+            position: relative;
+            top: 8px;
+        }
+
+        .p-ripple,
+        .p-toast-message-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px;
+            height: 22px;
+        }
+
+        svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .p-toast-message-text {
+            padding-right: 10px;
+
+            .p-toast-summary {}
+
+            .p-toast-detail {
+                margin-bottom: 5px;
+                color: $black;
+                font-size: 14px;
+            }
+        }
+    }
+}
+
+.data-table {
+    &__actions {
+        display: flex;
+        align-items: center;
+
+        div {
+            display: flex;
+            margin: 0 10px;
+            position: relative;
+
+            .tooltip {
+                position: absolute;
+                top: -20px;
+                background: rgba(0, 0, 0, 0.7);
+                border-radius: 5px;
+                color: $white;
+                opacity: 0;
+                visibility: hidden;
+                transition: 0.2s;
+                font-size: 14px;
+                width: 100px;
+                padding: 0 5px;
+                z-index: 5;
+                margin: auto;
+
+                right: -40px;
+                text-align: center;
+                padding-bottom: 5px;
+            }
+
+            &:hover .tooltip {
+                opacity: 1;
+                visibility: visible;
+            }
+        }
+    }
+
+}
+
+
+// Modal
+
+p-dialog .p-dialog {
+    .p-dialog-header {
+        padding: 10px 25px !important;
+        padding-left: 10px !important;
+
+        .p-dialog-title {
+            font-size: 32px;
+        }
+    }
+
+    .p-dialog-content {
+        padding: 20px;
+    }
+}
+
+.modal-box {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 15px;
+
+    &__form {
+        display: flex;
+        flex-direction: column;
+
+        .btn {
+            margin-top: 15px;
+        }
+    }
+
+    &__row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .btn {
+            margin-top: 0 !important;
+        }
+
+        app-input-text {
+            flex-grow: 1;
+            margin-left: 10px;
+        }
+
+        .control-box {
+            .input {
+                margin-top: 5px;
+            }
+        }
+    }
+
+    &__wrap {
+        padding: 0 15px;
+        border-radius: 10px;
+        background: #afe4ff;
+    }
+
+    &__actions {
+        margin-top: 25px;
+    }
+    &__picker{
+        margin-left: 10px;
+        &--mini{
+            
+        }
+    }
+}
+
+// Checkbox
+.checkbox {
+    p-checkbox {
+        min-width: 30px;
+        height: 30px;
+    }
+
+    .p-checkbox .p-checkbox-box {
+        min-width: 30px;
+        height: 30px;
+
+        checkicon {
+            width: 20px;
+            height: 20px;
+
+            svg {
+                width: 20px;
+                height: 20px;
+            }
+        }
+
+        &.p-disabled {
+            background: #e7e7e7;
+        }
+    }
+}
+
+// paginator
+
+.p-paginator>button {
+    transform: rotate(180deg);
+}
+
+
+// Full calendar
+
+
+.fc-view-harness{
+    // height: auto !important;
+    // min-height: 683.704px;
+    min-height: 559.704px;
+    max-height: 559.704px;
+    overflow: hidden;
+    .fc-scroller{
+        overflow: hidden !important;
+    }
+    .fc-daygrid-body,.fc-scrollgrid-sync-table{
+        width: 100% !important;
+    }
+}
+.fc-scrollgrid-sync-table{
+    height: auto !important;
+    // min-height: 641px;
+}
+
+.fc .fc-daygrid-day.fc-day-today{
+    background: #f6fafe;
+    .fc-daygrid-day-number{
+        color: $primary;
+    }
+}
+full-calendar{
+    .fc-header-toolbar{
+        .fc-today-button{
+            display: none;
+            
+        }
+        .fc-button{
+            padding: 5px 10px;
+            .fc-icon{
+                font-size: 25px !important;
+                position: relative;
+                top: -3px;
+            }
+        }
+        
+    }
+    .fc-col-header {
+        background: #c0e8ff;
+        width: 100% !important;
+        .fc-col-header-cell-cushion{
+            padding-bottom: 7px;
+            color: #166683;
+            font-weight: bold;
+            font-size: 28px;
+        }
+    }
+    .fc-daygrid-day-frame{
+        height: 84px;
+        cursor: pointer;
+        &:hover{
+            background: #fafafa;
+        }
+    }
+
+    .fc-h-event{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 30px !important;
+        max-width: 45px;
+        height: 30px !important;
+        position: relative;
+        top: 5px;
+        border-radius: 5px;
+        left: 5px;
+        .fc-event-main{
+            position: relative;
+            top: -3px;
+        }
+    }
+    .fc-direction-ltr .fc-daygrid-event.fc-event-end, .fc-direction-rtl .fc-daygrid-event.fc-event-start,.fc-daygrid-event-harness{
+        pointer-events: none;
+    }
+}

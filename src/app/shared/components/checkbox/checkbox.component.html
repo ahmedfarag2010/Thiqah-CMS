@@ -1,0 +1,14 @@
+<!-- FormBuilder Control -->
+<label class="checkbox" [formGroup]="formGroup" *ngIf="formGroup">
+    <p-checkbox [binary]="true" (onChange)="check($event)" [(ngModel)]="field.value" [formControlName]="field.name" [readOnly]="field.readOnly" [name]="field.name"/>    
+    <span class="checkbox__text">{{field.label}}</span>
+    <div *ngIf="isChecked" class="checkbox__overlay"></div>
+</label>
+
+
+<!-- Standard Component -->
+<label class="checkbox"  *ngIf="!formGroup">
+    <p-checkbox [binary]="true" [(ngModel)]="field.value" (onChange)="check($event)" [readOnly]="field.readOnly" [name]="field.name"/>    
+    <span class="checkbox__text">{{field.label}}</span>
+    <div *ngIf="isChecked" class="checkbox__overlay"></div>
+</label>

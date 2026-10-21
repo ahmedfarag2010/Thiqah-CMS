@@ -1,0 +1,111 @@
+@import "_variables.scss";
+
+
+
+button {
+    border: 0;
+    background: transparent;
+}
+
+.btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 45px;
+    line-height: 45px;
+    border-radius: 7px;
+    cursor: pointer;
+    transition: 0.2s;
+    // min-width: 180px;
+    width: 180px;
+    // font-size: 17px;
+    padding: 0 10px;
+    p{
+        color: $white;
+        margin: 0 5px;
+    }
+    .icon svg{
+        fill: $white;
+        path{
+            fill: $white;
+        }
+    }
+    &--primary {
+        background: $primary;
+        &:hover {
+            background: #34a8d6;
+        }
+    }
+    &--secondary {
+        background: $secondary2;
+
+        &:hover {
+            background: #42535c;
+        }
+    }
+    &--tertiary{
+        background: $tertiary;
+        p{
+            color: $secondary;
+        }
+        .icon svg{
+            fill: $secondary;
+            path{
+                fill: $secondary;
+            }
+        }
+        &:hover{
+            background: #b2cedf;
+        }
+    }
+    &--danger{
+        background: $danger;
+        p{
+            color: $dangerText;
+        }
+        .icon svg{
+            fill: $dangerText;
+            path{
+                fill: $dangerText;
+            }
+        }
+        &:hover{
+            background: #e9b8b3;
+        }
+    }
+    &--icon {
+        .icon {
+            display: flex;
+            align-items: center;
+            margin: 0 5px;
+            svg {
+                width: 22px;
+                height: 22px;
+            }
+        }
+    }
+    &--primary-light{
+        background: #c0e8ff;
+    }
+    &--icon-only{
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        .icon {
+            display: flex;
+            align-items: center;
+            margin: 0 5px;
+            svg {
+                width: 22px;
+                height: 22px;
+            }
+        }
+    }
+    &--full-width{
+        width: auto;
+    }
+    &:disabled{
+        background: #c0c0c0 !important;
+        cursor: not-allowed;
+    }
+}

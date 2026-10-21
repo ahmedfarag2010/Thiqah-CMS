@@ -1,0 +1,19 @@
+<div *ngIf="isSearch" class="search-table">
+    <app-input-text (textboxValue)="searchText($event)" [field]="search"></app-input-text>
+</div>
+<p-table [scrollable]="true" responsiveLayout="scroll" *ngIf="data_table.data.length > 0" [columns]="data_table.cols" [value]="data_table.data" (onSort)="onSort($event,data_table.data)">
+    <ng-template pTemplate="header" let-columns>
+        <tr>
+            <th *ngFor="let head of data_table.cols" pSortableColumn="{{head.key}}">
+                {{head.label}} <p-sortIcon field="{{head.key}}" />
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns" let-i="rowIndex">
+        <tr *ngIf="rowData.isShow" (click)="clickRow($event,rowData,i)">
+            <td *ngFor="let col of columns" [innerHTML]="rowData[col.key] ? (rowData[col.key ] | safeHtml) : '-'">
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
+
+<app-no-data *ngIf="data_table.data.length == 0"></app-no-data>

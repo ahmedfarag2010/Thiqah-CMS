@@ -1,0 +1,81 @@
+@import "variables";
+
+
+
+
+.control-box{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: 15px;
+    padding-bottom: 25px;
+    label{
+        font-size: 20px;
+        margin-bottom: 10px;
+        color:$text-gray;
+        letter-spacing: 0.5px;
+        display: flex;
+        p{
+            color: $invalid;
+        }
+    }
+    .input{
+        border: 1px solid $gray;
+        min-width: 220px;
+        padding: 0 10px;
+        height: 45px;
+        line-height: 45px;
+        border-radius: 5px;
+        font-size: 18px;
+        max-width: 100%;
+        &--create-topic{
+            font-size: 50px;
+            color: $primary;
+            border:0;
+            height: 75px;
+            line-height: 75px;
+            margin-bottom: 15px;
+            border: 0 !important;
+            &::placeholder {
+                color: #c0e8ff;
+            }
+        }
+        &.ng-invalid.ng-touched{
+            border: 1px solid $invalid;
+        }
+        @media (max-width:1366px){
+            min-width: auto;
+        }
+    }
+    .icon{
+        position: absolute;
+        width: 45px;
+        height: 45px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        bottom: 0;
+        right: 0;
+    }
+    &__error{
+        position: absolute;
+        font-size: 14px;
+        bottom: 5px;
+        color: $invalid;
+        letter-spacing:0.5px;
+    }
+    &--icon{
+        .input{
+            padding-right: 40px;
+        }
+    }
+    &--standalone{
+        margin-top: 0;
+        padding-bottom: 0;
+    }
+    &.readonly{
+        p-dropdown .p-dropdown{
+            background: #fafafa;
+        }
+    }
+}

@@ -1,0 +1,118 @@
+@import "../../../../scss/variables";
+
+.file-upload-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border: 2px dashed $primary;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+  
+  .file-upload-wrapper.success {
+    border-color: green;
+  }
+  
+  .file-upload-wrapper.error {
+    border-color: red;
+  }
+  
+  .file-dropper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    &__icon{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        width: 100%;
+        .icon svg path{
+            stroke: #6b7280;
+        }
+        p{
+            color: $primary;
+        }
+    }
+    .allowed{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      span{
+        font-size: 16px;
+      }
+      div{
+        display: flex;
+        margin: 0 5px;
+        @media (max-width:479px){
+          flex-wrap: wrap;
+        }
+        span{
+          display: inline-flex;
+          margin: 0 5px;
+        }
+      }
+      @media (max-width:479px){
+        flex-direction: column;
+      }
+    }
+  }
+  
+  .image-name {
+    font-weight: bold;
+  }
+  
+  .image-preview {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 0.5rem;
+    border-radius: 10px;
+  }
+  
+  .delete-icon {
+    cursor: pointer;
+    color: red;
+  }
+
+
+  .uploadedFiles{
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    &>p{
+        margin-bottom: 15px;
+    }
+    &__file{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px;
+        border: 1px solid #eee;
+        margin-bottom: 10px;
+        &:last-of-type{
+            margin-bottom: 0;
+        }
+        div{
+            display: flex;
+            align-items: center;
+            img{
+                height: 35px;
+                margin-left: 15px;
+            }
+            p{
+                font-size: 15px;
+                margin-bottom: 0;
+            }
+        }
+        .icon{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+  }

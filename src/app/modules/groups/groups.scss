@@ -1,0 +1,62 @@
+@import "../../../scss/variables";
+@import "../../../scss/fonts";
+
+.group-details{
+    display: flex;
+    flex-direction: column;
+    &__info{
+        display: flex;
+        border: 1px solid $gray;
+        flex-wrap: wrap;
+        padding: 0 30px;
+        border-radius: 5px;
+        padding-bottom: 25px;
+        // flex-direction: column;
+        margin-bottom: 20px;
+    }
+    &__property{
+        margin-top: 25px;
+        // margin-bottom: 25px;
+        min-width: 25%;
+        max-width: 25%;
+       
+        span{
+            color: $text-gray;
+            font-size: 19px;
+            font-family: TanseekModern-bold;
+            font-weight: bold;
+            letter-spacing: 0;
+        }
+        p{
+            font-family: TanseekModern-bold;
+            font-weight: bold;
+            letter-spacing: 0;
+            font-size: 24px;
+        }
+        &--lg{
+            min-width: 100%;
+            max-width: none;
+        }
+    }
+    &__members{
+        display: flex;
+        flex-wrap: wrap;
+        // justify-content: space-between;
+        &--column{
+            flex-direction: column;
+            .member-box{
+                min-width: auto;
+                max-width: none;
+                margin-left: 0;
+            }
+        }
+    }
+}
+
+.permissions-list{
+    min-width: 100%;
+    margin-top: 15px;
+    &__item{
+        margin-top: 10px;
+    }
+}

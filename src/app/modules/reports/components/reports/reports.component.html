@@ -1,0 +1,74 @@
+<div class="layout layout--full">
+    <div class="container">
+        <div class="sub-title">
+            <h5>التقارير</h5>
+            <button (click)="generateReport()" [disabled]="generateReportForm.invalid" class="btn btn--primary btn--icon">
+                <span class="icon">
+                    <svg height="1792" viewBox="0 0 1792 1792" width="1792" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M1344 800v64q0 14-9 23t-23 9h-352v352q0 14-9 23t-23 9h-64q-14 0-23-9t-9-23v-352h-352q-14 0-23-9t-9-23v-64q0-14 9-23t23-9h352v-352q0-14 9-23t23-9h64q14 0 23 9t9 23v352h352q14 0 23 9t9 23zm128 448v-832q0-66-47-113t-113-47h-832q-66 0-113 47t-47 113v832q0 66 47 113t113 47h832q66 0 113-47t47-113zm128-832v832q0 119-84.5 203.5t-203.5 84.5h-832q-119 0-203.5-84.5t-84.5-203.5v-832q0-119 84.5-203.5t203.5-84.5h832q119 0 203.5 84.5t84.5 203.5z" />
+                    </svg>
+                </span>
+                <p class="font-line">إنشاء تقرير</p>
+            </button>
+        </div>
+        <div class="generate-report">
+            <form [formGroup]="generateReportForm" class="generate-report__form">
+                <div class="row">
+                    <div *ngFor="let field of generateReportControls" class="col-md-{{field.cols}}">
+                        <app-dropdown *ngIf="field.type == 'dropdown'" (dropdownValue)="getDropdownValue($event)" [field]="field" [formGroup]="generateReportForm"></app-dropdown>
+                        <app-datepicker *ngIf="field.type == 'datepicker'" [field]="field" [formGroup]="generateReportForm"></app-datepicker>
+                    </div>
+                </div>
+            </form>
+            <div class="generate-report__result">
+                <div class="generate-report__heading">
+                    <h5>نتيجة التقرير</h5>
+                    <button (click)="print()" [disabled]="transactionsList.length == 0" class="btn btn--primary btn--icon">
+                    <!-- <button (click)="print()"  class="btn btn--primary btn--icon"> -->
+                        <span class="icon">
+                            <svg height="1792" viewBox="0 0 1792 1792" width="1792" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M1344 800v64q0 14-9 23t-23 9h-352v352q0 14-9 23t-23 9h-64q-14 0-23-9t-9-23v-352h-352q-14 0-23-9t-9-23v-64q0-14 9-23t23-9h352v-352q0-14 9-23t23-9h64q14 0 23 9t9 23v352h352q14 0 23 9t9 23zm128 448v-832q0-66-47-113t-113-47h-832q-66 0-113 47t-47 113v832q0 66 47 113t113 47h832q66 0 113-47t47-113zm128-832v832q0 119-84.5 203.5t-203.5 84.5h-832q-119 0-203.5-84.5t-84.5-203.5v-832q0-119 84.5-203.5t203.5-84.5h832q119 0 203.5 84.5t84.5 203.5z" />
+                            </svg>
+                        </span>
+                        <p class="font-line">طباعة التقرير</p>
+                    </button>
+                </div>
+                <div *ngIf="current_table.data.length > 0" class="report-result">
+                <!-- <div class="report-result"> -->
+                    <div class="report-result__heading">
+                        <div>نظام الإتصالات الإدارية - CMS</div>
+                        <div>
+                           {{durationTitle}}
+                        </div>
+                    </div>
+                    <div class="report-result__group">{{reportTitle}}</div>
+                    <div class="report-table">
+                        <div class="report-table__head">
+                            <span class="{{col.size}}" *ngFor="let col of current_table.columns">{{col.label}}</span>
+                        </div>
+                        <div class="report-table__body">
+                            <div *ngFor="let item of current_table.data;let i = index" class="report-table__row">
+                                <span class="{{prop.size}}" *ngFor="let prop of current_table.data[i]" [innerHTML]="prop.label"></span>
+                                <!-- <span>{{item.reg_and_date}}</span>
+                                <span>{{item.group}}</span>
+                                <span>{{item.topid}}</span> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="current_table.data.length > 0 && reportType == 'incoming'" class="report-result-status">
+                    <div><div class="report-status report-status__0"></div><p>قد لا يتطلب الموضوع إعداد إجابة</p></div>
+                    <div><div class="report-status report-status__1"></div><p>قارب الوقت المحدد للإجابة</p></div>
+                    <div><div class="report-status report-status__2"></div><p>تم تحقيق الإجابة</p></div>
+                    <div><div class="report-status report-status__3"></div><p>ضمن نطاق الوقت المحدد للإجابة</p></div>
+                    <div><div class="report-status report-status__4"></div><p>تجاوز الوقت المحدد للإجابة</p></div>
+                </div>
+                <app-paginator *ngIf="current_table.data.length > 0" [rows]="generateReportPayload.pageSize" [totalRecords]="totalRecords" (switch)="onPageChange($event)"></app-paginator>
+                <app-no-data *ngIf="current_table.data.length == 0"></app-no-data>
+                <!-- <app-no-data ></app-no-data> -->
+            </div>
+        </div>
+    </div>
+</div>

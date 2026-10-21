@@ -1,0 +1,87 @@
+@import "_variables.scss";
+
+
+@font-face {
+    font-family: TanseekModern-light;
+    src: url(../../public/assets/fonts/tanseek/TanseekModernProArabic-Light.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: TanseekModern-regular;
+    src: url(../../public/assets/fonts/tanseek/TanseekModernProArabic-Book.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: TanseekModern-medium;
+    src: url(../../public/assets/fonts/tanseek/TanseekModernProArabic-Medium.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: TanseekModern-bold;
+    src: url(../../public/assets/fonts/tanseek/TanseekModernProArabic-Bold.ttf) format('truetype');
+}
+
+* {
+    font-size: 22px;
+    // line-height: 16px;
+    // color: $secondary;
+    font-family: TanseekModern-light;
+    font-weight: 700;
+    letter-spacing: 1.1px;
+}
+
+.font-line{
+    position: relative;
+    top: -4px;
+}
+
+h1,h2,h3,h4,h5,h6{
+    // font-family: TanseekModern-bold;
+    font-weight: bold;
+}
+
+h1{
+    font-size: 62px;
+    line-height: 90px;
+    margin-bottom: 10px;
+}
+h2{
+    font-size: 57px;
+}
+h3{
+    font-size: 50px;
+}
+h4{
+    font-size: 42px;
+}
+h5{
+    font-size: 35px;
+}
+h6{
+    font-size: 30px;
+}
+
+.main-title{
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    margin: 60px auto;
+    // margin-top: 60px;
+    h1{
+        color: $primary;
+    }
+}
+
+
+.sub-title{
+    margin-top: 30px;
+    margin-bottom: 30px;
+    text-align: right;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    @media (max-width:1023px){
+        margin-top:15px;
+        margin-bottom: 15px;
+    }
+}
