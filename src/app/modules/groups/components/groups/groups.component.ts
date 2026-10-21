@@ -55,6 +55,20 @@ export class GroupsComponent implements OnInit {
       isRequired: true
     },
     {
+      label: 'المستأجر',
+      name: 'tenantId',
+      formControlName: 'tenantId',
+      type: 'dropdown',
+      readonly: false,
+      placeholder: 'أختر المستأجر',
+      icon: '',
+      class: '',
+      cols: 12,
+      value: [],
+      isRequired: true,
+      options: []
+    },
+    {
       label: 'مجموعة فرعية',
       name: 'subGroup',
       formControlName: 'subGroup',
@@ -113,7 +127,8 @@ export class GroupsComponent implements OnInit {
 
   ngOnInit() {
     if (this.PermissionsService.isHasPermissions(this.select_group_permission)) {
-      this.getParentGroups()
+      this.getGroups()
+      this.getTenants()
       
       this.data_table = {
         cols: [
@@ -204,7 +219,7 @@ export class GroupsComponent implements OnInit {
 
 
   selectedRow(row: any) {
-    let clickedGroup = this.groupsList.find(group => group.name == row.row.groupName)
+    let clickedGroup = this.groupsList.find(group => (group.groupNameWithTenant || group.name) == row.row.groupName)
     this.Router.navigate([`cms/groups/group/${clickedGroup.id}`])
   }
 
@@ -221,6 +236,8 @@ export class GroupsComponent implements OnInit {
       this.groupForm.get('name')?.setValue(this.currentGroup.name)
       this.groupForm.get('description')?.setValue(this.currentGroup.description)
       this.groupForm.get('note')?.setValue(this.currentGroup.note)
+      let selectedTenant = this.tenantsList.find((tenant: any) => tenant.id == this.currentGroup.tenantId)
+      this.groupForm.get('tenantId')?.setValue(selectedTenant ? { name: selectedTenant.name, id: selectedTenant.id } : null)
     } else if (event.action == 'editPermissions') {
       this.Router.navigate([`cms/groups/permissions/${this.groupsList[event.rowIndex].id}`])
     } else if (event.action == 'addUsers') {
@@ -256,6 +273,20 @@ export class GroupsComponent implements OnInit {
     }
   }
 
+  changeDropdown(event: any) {
+    if (event?.field?.name != 'tenantId') {
+      return
+    }
+    this.groupForm.get('parentId')?.reset()
+    const tenantId = event.event?.value?.id
+    if (tenantId) {
+      this.getParentGroups(tenantId, false)
+    } else {
+      let control = this.groupControls.find(control => control.name == 'parentId')
+      if (control) control.options = []
+    }
+  }
+
   checkboxValue(event: any) {
     if (event && event.field.name == 'subGroup') {
       let control = this.groupControls.find(control => control.name == 'parentId')
@@ -277,6 +308,8 @@ export class GroupsComponent implements OnInit {
     this.groupForm.removeControl('subGroup')
     let parentIdControl = this.groupForm.get('parentId')
     parentIdControl && parentIdControl.value ? parentIdControl.setValue(parentIdControl.value.id) : null
+    let tenantIdControl = this.groupForm.get('tenantId')
+    tenantIdControl && tenantIdControl.value ? tenantIdControl.setValue(tenantIdControl.value.id) : null
     // console.log(this.groupForm.value)
     if (this.currentAction == 'add') {
       this.XhrService.post('v1/grouplevels/add', this.groupForm.value).subscribe(res => {
@@ -291,6 +324,7 @@ export class GroupsComponent implements OnInit {
         name: this.groupForm.get('name')?.value,
         description: this.groupForm.get('description')?.value,
         note: this.groupForm.get('note')?.value,
+        tenantId: this.groupForm.get('tenantId')?.value,
       }
       // console.log(payload)
       this.XhrService.put('v1/grouplevels/update', payload).subscribe(res => {
@@ -334,10 +368,10 @@ export class GroupsComponent implements OnInit {
       if (res.data) {
         this.groupsList = res.data
         for (let i = 0; i < this.groupsList.length; i++) {
-          let parent:any = this.parentGroupsList.find((group:any) => group.id == this.groupsList[i].parentId)
+          let parent: any = this.groupsList.find((group: any) => group.id == this.groupsList[i].parentId)
           this.data_table.data.push({
             number: i + 1,
-            groupName: this.groupsList[i].name,
+            groupName: this.groupsList[i].groupNameWithTenant || this.groupsList[i].name,
             parent: parent ? parent.name : '-',
             members: this.groupsList[i].users.length,
             creationDate: this.SharedService.transformDateFormat(this.groupsList[i].createdDate),
@@ -350,18 +384,38 @@ export class GroupsComponent implements OnInit {
   }
 
 
+  tenantsList: any[] = []
+  getTenants() {
+    this.XhrService.get('v1/tenant/getall').subscribe(res => {
+      const list = Array.isArray(res?.data) ? res.data : (res?.data?.data || [])
+      this.tenantsList = list
+      let options: any[] = []
+      for (let i = 0; i < list.length; i++) {
+        options.push({ name: list[i].name, id: list[i].id })
+      }
+      let control = this.groupControls.find(control => control.name == 'tenantId')
+      control ? control.options = options : null
+    })
+  }
+
   parentGroupsList = []
-  getParentGroups() {
+  getParentGroups(tenantId?: any, loadGroups: boolean = true) {
+    let filter: any = {
+      isParent: true
+    }
+    if (tenantId) {
+      filter.tenantId = tenantId
+    }
     let payload = {
       "pageNumber": 1,
       "pageSize": 50,
-      "filter": {
-        "isParent": true
-      },
+      "filter": filter,
       "orderByValue": [{}]
     }
     this.XhrService.post('v1/grouplevels/getpaged', payload).subscribe(res => {
-      this.getGroups()
+      if (loadGroups) {
+        this.getGroups()
+      }
       if (res.data.data) {
         let response = res.data.data
         this.parentGroupsList = response
@@ -378,7 +432,6 @@ export class GroupsComponent implements OnInit {
   resetAfterSubmit() {
     this.isShowGroupModal = false
     this.getGroups()
-    this.getParentGroups()
     this.groupForm.reset()
     this.groupForm.get('parentId')?.disable()
   }

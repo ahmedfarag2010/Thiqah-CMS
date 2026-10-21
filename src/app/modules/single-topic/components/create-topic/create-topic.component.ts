@@ -33,7 +33,7 @@ export class CreateTopicComponent implements OnInit {
 
   transactionId: any
 
-  userData:any
+  userData: any
 
   createTopicForm: FormGroup
   constructor(
@@ -60,6 +60,20 @@ export class CreateTopicComponent implements OnInit {
   allControls: FBControl[] = []
 
   topicDetailsControls: FBControl[] = [
+    {
+      label: 'المستأجر',
+      name: 'tenantId',
+      formControlName: 'tenantId',
+      type: 'dropdown',
+      readonly: false,
+      placeholder: 'أختر المستأجر',
+      icon: '',
+      class: '',
+      cols: 4,
+      value: [],
+      isRequired: true,
+      options: []
+    },
     {
       label: 'نوع المعاملة',
       name: 'type',
@@ -141,7 +155,7 @@ export class CreateTopicComponent implements OnInit {
       value: [],
       isRequired: false
     },
-    
+
   ]
 
   titleControl: FBControl[] = [
@@ -205,9 +219,9 @@ export class CreateTopicComponent implements OnInit {
     }
   ]
 
-  
 
-  otherDetailsControls:FBControl[] = [
+
+  otherDetailsControls: FBControl[] = [
     {
       label: 'عدد المشفوعات',
       name: 'attachmentsCount',
@@ -302,11 +316,15 @@ export class CreateTopicComponent implements OnInit {
       console.log(this.userData)
       this.initForm()
       this.getOrganization()
-      this.getGroups()
+      this.getTenants()
       this.getTransactionsTypes()
       this.getTransacionAdjective()
       this.getImportanceLevel()
       this.transactionId = this.ActivatedRoute.snapshot.queryParamMap.get('id')
+      if (this.transactionId) {
+        this.exportTransaction()
+        this.isExportMode = true
+      }
     } else {
       this.Router.navigate(['cms/home'])
       this.SharedService.showToaster('error', 'خطأ', 'ليس لديك صلاحية للوصول لهذه الصفحة', 5000)
@@ -317,14 +335,14 @@ export class CreateTopicComponent implements OnInit {
 
   initForm() {
     // this.allControls = this.titleControl.concat(this.topicDetailsControls, this.sendToControls, this.attachmentsControls)
-    this.allControls = this.topicDetailsControls.concat(this.titleControl,this.sendToControls,this.otherDetailsControls,this.attachmentsControls)
+    this.allControls = this.topicDetailsControls.concat(this.titleControl, this.sendToControls, this.otherDetailsControls, this.attachmentsControls)
     const fieldsCtrls: any = {};
     this.allControls.forEach((field: any) => {
       fieldsCtrls[field.formControlName] = this.FormBuilder.control(null, field.isRequired ? Validators.required : null);
       // fieldsCtrls[field.formControlName] = this.FormBuilder.control(null, field.isRequired ? null : null);
     });
     this.createTopicForm = this.FormBuilder.group(fieldsCtrls);
-    this.createTopicForm.get('topic')?.setValidators([Validators.required,Validators.maxLength(250)])
+    this.createTopicForm.get('topic')?.setValidators([Validators.required, Validators.maxLength(250)])
     this.createTopicForm.get('notes')?.setValidators(Validators.maxLength(500))
     this.createTopicForm.get('incomingLetterNumber')?.setValidators(Validators.maxLength(15))
     this.createTopicForm.get('attachmentsCount')?.setValidators(Validators.maxLength(15))
@@ -346,9 +364,9 @@ export class CreateTopicComponent implements OnInit {
 
 
 
-  transactionType:any
+  transactionType: any
   getDropdownValue(event: any) {
-    console.log(event)
+    // console.log(event)
     if (event.event.value) {
       if (event.field.name == 'organization') {
         this.getSubOrganization(event.event.value.id)
@@ -356,6 +374,29 @@ export class CreateTopicComponent implements OnInit {
       if (event.field.name == 'type') {
         this.getNewId(event.event.value.id)
         this.transactionType = event.event.value.id
+      }
+      if (event.field.name == 'tenantId') {
+        this.resetGroupOptions()
+        this.getGroups(event.event.value.id)
+        if (this.transactionType) {
+          this.getNewId(this.transactionType)
+        }
+      }
+      if (event.field.name == 'groupLevelId') {
+        this.filterSelectedGroup(event.event)
+      }
+    } else {
+      if (event.field.name == 'tenantId') {
+        this.resetGroupOptions()
+      }
+      if (event.field.name == 'groupLevelId') {
+        // this.topicCopies.options =
+        let options: any[] = []
+        for (let i = 0; i < this.groupsList.length; i++) {
+          options.push({ name: this.groupsList[i].groupNameWithTenant || this.groupsList[i].name, id: this.groupsList[i].id })
+        }
+        let groupsControl = this.topicCopies
+        groupsControl ? groupsControl.options = options : null
       }
     }
   }
@@ -426,6 +467,28 @@ export class CreateTopicComponent implements OnInit {
         this.copiesValues.push(event.event.value[i].id)
       }
     }
+  }
+
+  filterSelectedGroup(event: any) {
+    // first reset
+    let options: any[] = []
+    for (let i = 0; i < this.groupsList.length; i++) {
+      options.push({ name: this.groupsList[i].groupNameWithTenant || this.groupsList[i].name, id: this.groupsList[i].id })
+    }
+    let groupsControl = this.topicCopies
+    groupsControl ? groupsControl.options = options : null
+    // after reset filter by new val
+    event = [event.value]
+    // console.log(event)
+    let groups = this.topicCopies.options
+    // console.log(groups)
+    let filtered = this.topicCopies.options.filter((val: any) => {
+      return !event.find((val2: any) => {
+        return val.id === val2.id
+      })
+    });
+    // console.log(filtered)
+    this.topicCopies.options = filtered
   }
 
 
@@ -534,33 +597,29 @@ export class CreateTopicComponent implements OnInit {
     })
   }
 
-  groupsList = []
-  getGroups() {
-    this.XhrService.get('v1/grouplevels/get-avilable-groups').subscribe(res => {
-      // this.XhrService.get('v1/grouplevels/getall').subscribe(res => {
-      if (res.data) {
-        this.groupsList = res.data
-        let options: any[] = []
-        for (let i = 0; i < res.data.length; i++) {
-          options.push({ name: res.data[i].name, id: res.data[i].id })
-        }
-        let control = this.allControls.find(control => control.name == 'groupLevelId')
-        let groupsControl = this.topicCopies
-        control ? control.options = options : null
-        groupsControl ? groupsControl.options = options : null
-
-
-        if (this.transactionId) {
-          // init export transaction
-          // setTimeout(() => {
-          this.exportTransaction()
-          this.isExportMode = true
-          // }, 2000);
-
-        }
-
+  groupsList: any = []
+  getGroups(tenantId: any) {
+    this.XhrService.get(`v1/grouplevels/get-groups?tenantId=${tenantId}`).subscribe(res => {
+      const list = Array.isArray(res?.data) ? res.data : (res?.data?.data || [])
+      this.groupsList = list
+      let options: any[] = []
+      for (let i = 0; i < list.length; i++) {
+        options.push({ name: list[i].groupNameWithTenant || list[i].name, id: list[i].id })
       }
+      let control = this.allControls.find(control => control.name == 'groupLevelId')
+      let groupsControl = this.topicCopies
+      control ? control.options = options : null
+      groupsControl ? groupsControl.options = [...options] : null
     })
+  }
+
+  resetGroupOptions() {
+    this.groupsList = []
+    this.copiesValues = []
+    this.createTopicForm.get('groupLevelId')?.reset()
+    let control = this.allControls.find(control => control.name == 'groupLevelId')
+    if (control) control.options = []
+    if (this.topicCopies) this.topicCopies.options = []
   }
 
 
@@ -570,9 +629,29 @@ export class CreateTopicComponent implements OnInit {
     control ? control.options = options : null
   }
 
+  tenantsList: any[] = []
+  getTenants() {
+    this.XhrService.get('v1/tenant/getall').subscribe(res => {
+      const list = Array.isArray(res?.data) ? res.data : (res?.data?.data || [])
+      this.tenantsList = list
+      let options: any[] = []
+      for (let i = 0; i < list.length; i++) {
+        options.push({ name: list[i].name, id: list[i].id })
+      }
+      let control = this.allControls.find(control => control.name == 'tenantId')
+      control ? control.options = options : null
+    })
+  }
+
   regId = null
-  getNewId(id: any) {
-    this.XhrService.get(`v1/transaction/get-new-id?type=${id}`).subscribe(res => {
+  getNewId(id: any, tenantId?: any) {
+    const selectedTenant = tenantId || this.createTopicForm.get('tenantId')?.value
+    const selectedTenantId = selectedTenant?.id || selectedTenant
+    let url = `v1/transaction/get-new-id?type=${id}`
+    if (selectedTenantId) {
+      url += `&tenantId=${selectedTenantId}`
+    }
+    this.XhrService.get(url).subscribe(res => {
       if (res.data) {
         let registrationNumber = this.allControls.find(control => control.name == 'registrationNumber')
         registrationNumber ? registrationNumber.value = res.data : null
@@ -749,7 +828,7 @@ export class CreateTopicComponent implements OnInit {
               <span class="lg">${new Date().toISOString().split('T')[0]}</span>
             </div>
             <div class="report-table__row">
-              <span class="lg">رقم الوارد</span>
+              <span class="lg">${this.transactionType == 1 ? 'رقم القيد' : 'رقم الصادر'}</span>
               <span class="lg">${this.createTopicForm.getRawValue().registrationNumber ? this.createTopicForm.getRawValue().registrationNumber : '-'}</span>
             </div>
           </div>
@@ -850,12 +929,21 @@ export class CreateTopicComponent implements OnInit {
             control.value = object
             this.createTopicForm.get('importanceLevelId')?.setValue(object)
           }
+          else if (control.name == 'tenantId' && this.transactionData.tenantId) {
+            let tenant = this.tenantsList.find((item: any) => item.id == this.transactionData.tenantId)
+            let object = tenant ? { name: tenant.name, id: tenant.id } : { name: this.transactionData.tenantName, id: this.transactionData.tenantId }
+            control.options.push(object)
+            control.readonly = true
+            control.value = object
+            this.createTopicForm.get('tenantId')?.setValue(object)
+            this.getGroups(this.transactionData.tenantId)
+          }
           else if (control.name == 'type') {
             let object = { name: 'الصادر ', id: 2 }
             control.readonly = true
             control.value = object
             this.createTopicForm.get('type')?.setValue(object)
-            this.getNewId(2)
+            this.getNewId(2, this.transactionData.tenantId)
           }
         }
         else if (control.type == 'datepicker') {

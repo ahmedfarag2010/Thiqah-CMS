@@ -1,0 +1,43 @@
+<div class="layout layout--full">
+    <div class="container">
+        <div class="sub-title">
+            <h5>المستأجرين</h5>
+            <a (click)="initTenantForm('add')" class="btn btn--tertiary btn--icon">
+                <span class="icon">
+                    <svg height="1792" viewBox="0 0 1792 1792" width="1792" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M1344 800v64q0 14-9 23t-23 9h-352v352q0 14-9 23t-23 9h-64q-14 0-23-9t-9-23v-352h-352q-14 0-23-9t-9-23v-64q0-14 9-23t23-9h352v-352q0-14 9-23t23-9h64q14 0 23 9t9 23v352h352q14 0 23 9t9 23zm128 448v-832q0-66-47-113t-113-47h-832q-66 0-113 47t-47 113v832q0 66 47 113t113 47h832q66 0 113-47t47-113zm128-832v832q0 119-84.5 203.5t-203.5 84.5h-832q-119 0-203.5-84.5t-84.5-203.5v-832q0-119 84.5-203.5t203.5-84.5h832q119 0 203.5 84.5t84.5 203.5z" />
+                    </svg>
+                </span>
+                <p class="font-line">إنشاء مستأجر جديد</p>
+            </a>
+        </div>
+        <app-data-table [data_table]="data_table" (clickedChildButton)="clickChildButton($event)"></app-data-table>
+    </div>
+</div>
+
+<p-dialog [header]="modalTitle" [modal]="true" [(visible)]="isShowTenantModal" [style]="{ width: '600px' }">
+    <div class="modal-box">
+        <form [formGroup]="tenantForm" class="modal-box__form" *ngIf="tenantForm">
+            <ng-container *ngFor="let field of tenantControls">
+                <app-input-text *ngIf="field.type == 'textbox'" [field]="field" [formGroup]="tenantForm"></app-input-text>
+            </ng-container>
+            <button type="button" [disabled]="tenantForm.invalid" (click)="submitTenant()" class="btn btn--secondary">
+                <p class="font-line">{{modalButton}}</p>
+            </button>
+        </form>
+    </div>
+</p-dialog>
+
+<p-confirmDialog [style]="{ width: '25rem'}" #cd>
+    <ng-template pTemplate="message" let-message>
+        <div class="confirmation-wrap">
+            <h4 class="title">حذف مستأجر</h4>
+            <p class="message">هل أنت متأكد من حذف هذا المستأجر ؟</p>
+            <div class="buttons">
+                <button (click)="cd.accept()" class="btn btn--primary"><p class="font-line">حذف</p></button>
+                <button (click)="cd.reject()" class="btn btn--danger"><p class="font-line">إلغاء</p></button>
+            </div>
+        </div>
+    </ng-template>
+</p-confirmDialog>

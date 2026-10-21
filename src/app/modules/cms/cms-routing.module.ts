@@ -28,6 +28,10 @@ const routes: Routes = [
         loadChildren: () => import('../groups/groups.module').then(m => m.GroupsModule)
       },
       {
+        path: 'tenants',
+        loadChildren: () => import('../tenants/tenants.module').then(m => m.TenantsModule)
+      },
+      {
         path: 'settings',
         loadChildren: () => import('../settings/settings.module').then(m => m.SettingsModule)
       },
@@ -56,3 +60,4 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class CmsRoutingModule { }
+

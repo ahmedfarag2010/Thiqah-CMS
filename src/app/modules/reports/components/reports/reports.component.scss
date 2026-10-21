@@ -3,6 +3,16 @@
 .generate-report{
     display: flex;
     flex-direction: column;
+    &__form{
+        .row > div{
+            @media (min-width: 768px){
+                flex: 1 1 0;
+                max-width: none;
+                width: auto;
+                min-width: 0;
+            }
+        }
+    }
     &__heading{
         display: flex;
         align-items: center;

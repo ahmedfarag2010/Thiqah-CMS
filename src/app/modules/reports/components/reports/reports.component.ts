@@ -77,62 +77,17 @@ export class ReportsComponent implements OnInit {
   // data_table: any = {}
   // table_lables: any = []
 
-  incoming_table:any = {
-    columns:[
-      {
-        label:'#',
-        size:'sm'
-      },
-      {
-        label:'رقم القيد والتاريخ',
-        size:'mid'
-      },
-      {
-        label:'الجهة',
-        size:'mid'
-      },
-      {
-        label:'الموضوع',
-        size:'lg'
-      },
-      {
-        label:'الحالة',
-        size:'sm'
-      },
-      {
-        label:'تحقيق مستهدف الإجابة',
-        size:'mid'
-      }
-    ],
-    data:[]
-  }
+  incoming_table:any;
     
     
-  outgoing_table:any = {
-    columns:[
-      {
-        label:'#',
-        size:'sm'
-      },
-      {
-        label:'رقم القيد والتاريخ',
-        size:'mid'
-      },
-      {
-        label:'الجهة',
-        size:'mid'
-      },
-      {
-        label:'الموضوع',
-        size:'lg'
-      },
-    ],
-    data:[]
-  }
+  outgoing_table:any;
     
   
 
-  current_table:any = this.incoming_table
+  current_table:any = {
+    columns:[],
+    data:[]
+  }
 
 
 
@@ -149,6 +104,20 @@ export class ReportsComponent implements OnInit {
       cols: 3,
       value: [],
       isRequired: true,
+      options: []
+    },
+    {
+      label: 'المستأجر',
+      name: 'tenantId',
+      formControlName: 'tenantId',
+      type: 'dropdown',
+      readonly: false,
+      placeholder: 'أختر المستأجر',
+      icon: '',
+      class: '',
+      cols: 3,
+      value: [],
+      isRequired: false,
       options: []
     },
     {
@@ -197,8 +166,60 @@ export class ReportsComponent implements OnInit {
   ngOnInit(): void {
     if (this.PermissionsService.isHasPermissions('report')) {
       // console.log(this.PermissionsService.getUserPermissions())
-      this.getGroups()
       this.initForm()
+      this.getTenants()
+      this.getGroups()
+      this.incoming_table = {
+        columns:[
+          {
+            label:'#',
+            size:'sm'
+          },
+          {
+            label:'رقم القيد والتاريخ',
+            size:'mid'
+          },
+          {
+            label:'الجهة',
+            size:'mid'
+          },
+          {
+            label:'الموضوع',
+            size:'lg'
+          },
+          {
+            label:'الحالة',
+            size:'sm'
+          },
+          {
+            label:'تحقيق مستهدف الإجابة',
+            size:'mid'
+          }
+        ],
+        data:[]
+      }
+
+      this.outgoing_table = {
+        columns:[
+          {
+            label:'#',
+            size:'sm'
+          },
+          {
+            label:'رقم الصادر والتاريخ',
+            size:'mid'
+          },
+          {
+            label:'الجهة',
+            size:'mid'
+          },
+          {
+            label:'الموضوع',
+            size:'lg'
+          },
+        ],
+        data:[]
+      }
     } else {
       this.Router.navigate(['cms/home'])
       this.SharedService.showToaster('error', 'خطأ', 'ليس لديك صلاحية للوصول لهذه الصفحة', 5000)
@@ -226,7 +247,11 @@ export class ReportsComponent implements OnInit {
 
 
   getDropdownValue(event: any) {
-    // console.log(event)
+    if (event?.field?.name != 'tenantId') {
+      return
+    }
+    this.generateReportForm.get('groupId')?.reset()
+    this.getGroups(event.event?.value?.id)
   }
 
 
@@ -237,6 +262,7 @@ export class ReportsComponent implements OnInit {
     "pageSize": 10,
     "filter": {
       "groupId": "",
+      "tenantId": "",
       "startDate": "",
       "endDate": ""
     },
@@ -249,8 +275,11 @@ export class ReportsComponent implements OnInit {
 
   reportResult:any = []
   generateReport() {
+    this.current_table.columns = []
+    this.current_table.data = []
     this.report_endpoint = this.generateReportForm.get('type')?.value.id
     this.generateReportPayload.filter.groupId = this.generateReportForm.get('groupId') ? this.generateReportForm.get('groupId')?.value.id : null
+    this.generateReportPayload.filter.tenantId = this.generateReportForm.get('tenantId')?.value?.id || null
     this.generateReportPayload.filter.startDate = this.generateReportForm.get('startDate')?.value
     this.generateReportPayload.filter.endDate = this.generateReportForm.get('endDate')?.value
     this.XhrService.post(`v1/report/${this.report_endpoint}`, this.generateReportPayload).subscribe(res => {
@@ -258,7 +287,7 @@ export class ReportsComponent implements OnInit {
         this.transactionsList = res.data.data
         this.totalRecords = res.data.totalCount
         this.durationTitle = `التقرير الشهري من ${this.generateReportPayload.filter.startDate} إلي ${this.generateReportPayload.filter.endDate}`
-        this.current_table.data = []
+        
         if(this.report_endpoint == 'incoming-report'){
           this.reportType = 'incoming'
           this.current_table.columns = this.incoming_table.columns
@@ -289,7 +318,7 @@ export class ReportsComponent implements OnInit {
               },
             ])
           }
-          console.log(this.current_table)
+          
         } else {
           this.reportType = 'outgoing'
           this.current_table.columns = this.outgoing_table.columns
@@ -314,6 +343,7 @@ export class ReportsComponent implements OnInit {
             ])
           }
         }
+        console.log(this.incoming_table.columns)
         this.reportTitle = `${this.reportType == 'incoming' ? 'المعاملات الواردة' : 'المعاملات الصادرة'}`
         if(this.generateReportForm.get('groupId')){
           this.reportTitle += ` - ${this.generateReportForm.get('groupId')?.value.name}`
@@ -438,27 +468,27 @@ export class ReportsComponent implements OnInit {
         }
         .report-status {
             display: flex;
-            width: 25px;
-            height: 25px;
+            width: 15px;
+            height: 15px;
             border-radius: 50%;
             position: relative;
             top: 3px;
             print-color-adjust: exact;
         }
         .report-status__0 {
-            background: #dedede;
+            background: #d9d9da;
         }
         .report-status__1 {
-            background: orange;
+            background: #ffc000;
         }
         .report-status__2 {
             background: #36b4e5;
         }
         .report-status__3 {
-            background: #35a471;
+            background: #70c140;
         }
         .report-status__4 {
-            background: #ff7373;
+            background: #ff0000;
         }
         .report-result-status{
           display: flex;
@@ -508,18 +538,32 @@ export class ReportsComponent implements OnInit {
   // get groups
 
   groupsList: any[] = []
-  getGroups() {
-    this.XhrService.get('v1/grouplevels/getall').subscribe(res => {
-      // console.log(res)
-      if (res.data) {
-        this.groupsList = res.data
-        let options: any[] = []
-        for (let i = 0; i < res.data.length; i++) {
-          options.push({ name: res.data[i].name, id: res.data[i].id })
-        }
-        let control = this.generateReportControls.find(control => control.name == 'groupId')
-        control ? control.options = options : null
+  getGroups(tenantId?: any) {
+    let url = 'v1/grouplevels/getall'
+    if (tenantId) {
+      url += `?tenantId=${tenantId}`
+    }
+    this.XhrService.get(url).subscribe(res => {
+      const list = Array.isArray(res?.data) ? res.data : (res?.data?.data || [])
+      this.groupsList = list
+      let options: any[] = []
+      for (let i = 0; i < list.length; i++) {
+        options.push({ name: list[i].groupNameWithTenant || list[i].name, id: list[i].id })
       }
+      let control = this.generateReportControls.find(control => control.name == 'groupId')
+      control ? control.options = options : null
+    })
+  }
+
+  getTenants() {
+    this.XhrService.get('v1/tenant/getall').subscribe(res => {
+      const list = Array.isArray(res?.data) ? res.data : (res?.data?.data || [])
+      let options: any[] = []
+      for (let i = 0; i < list.length; i++) {
+        options.push({ name: list[i].name, id: list[i].id })
+      }
+      let control = this.generateReportControls.find(control => control.name == 'tenantId')
+      control ? control.options = options : null
     })
   }
 

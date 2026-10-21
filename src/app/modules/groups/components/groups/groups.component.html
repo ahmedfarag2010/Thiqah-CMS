@@ -25,7 +25,7 @@
             <ng-container *ngFor="let field of groupControls">
                 <app-input-text *ngIf="field.type == 'textbox'" [field]="field" [formGroup]="groupForm"></app-input-text>
                 <app-checkbox (checkValue)="checkboxValue($event)" *ngIf="field.type == 'checkbox'" [field]="field" [formGroup]="groupForm"></app-checkbox>
-                <app-dropdown *ngIf="field.type == 'dropdown'" [field]="field" [formGroup]="groupForm"></app-dropdown>
+                <app-dropdown (dropdownValue)="changeDropdown($event)" *ngIf="field.type == 'dropdown'" [field]="field" [formGroup]="groupForm"></app-dropdown>
             </ng-container>
             <button [disabled]="groupForm.invalid" (click)="submitGroup()" class="btn btn--secondary">
                 <!-- <span class="icon">
