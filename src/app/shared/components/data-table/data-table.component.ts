@@ -80,7 +80,8 @@ export class DataTableComponent implements OnInit {
     if (this.insertedText) {
       for (let i = 0; i < this.data_table.data.length; i++) {
         if (this.data_table.data[i].topic?.toLowerCase().includes(this.insertedText.toLowerCase()) || 
-        this.data_table.data[i].registrationIncomingOutcomingNumber?.toLowerCase().includes(this.insertedText.toLowerCase()) || 
+        this.data_table.data[i].registrationIncomingOutcomingNumber?.toLowerCase().includes(this.insertedText.toLowerCase()) ||
+        this.data_table.data[i].groupTenantName?.toLowerCase().includes(this.insertedText.toLowerCase()) || 
         this.data_table.data[i].importanceLevelName?.toLowerCase().includes(this.insertedText.toLowerCase()) ||
         this.data_table.data[i].groupName?.toLowerCase().includes(this.insertedText.toLowerCase()) ||
         this.data_table.data[i].date?.toLowerCase().includes(this.insertedText.toLowerCase()) ||

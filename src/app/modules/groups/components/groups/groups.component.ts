@@ -21,6 +21,7 @@ export class GroupsComponent implements OnInit {
 
   select_group_permission = 'read_groups'
   groupForm: FormGroup
+  filterForm: FormGroup
 
 
   isShowGroupModal = false
@@ -55,12 +56,12 @@ export class GroupsComponent implements OnInit {
       isRequired: true
     },
     {
-      label: 'المستأجر',
+      label: 'الشركة',
       name: 'tenantId',
       formControlName: 'tenantId',
       type: 'dropdown',
       readonly: false,
-      placeholder: 'أختر المستأجر',
+      placeholder: 'أختر الشركة',
       icon: '',
       class: '',
       cols: 12,
@@ -122,14 +123,72 @@ export class GroupsComponent implements OnInit {
     }
   ]
 
+  filterControls: FBControl[] = [
+    {
+      label: 'بحث',
+      name: 'name',
+      formControlName: 'name',
+      type: 'textbox',
+      readonly: false,
+      placeholder: 'إبحث عن مجموعة',
+      icon: '',
+      class: '',
+      cols: 3,
+      value: [],
+      isRequired: false
+    },
+    {
+      label: 'الشركة',
+      name: 'tenantId',
+      formControlName: 'tenantId',
+      type: 'dropdown',
+      readonly: false,
+      placeholder: 'أختر الشركة',
+      icon: '',
+      class: '',
+      cols: 3,
+      value: [],
+      isRequired: false,
+      options: []
+    },
+    {
+      label: 'مجموعة رئيسية',
+      name: 'isParent',
+      formControlName: 'isParent',
+      type: 'dropdown',
+      readonly: false,
+      placeholder: 'أختر النوع',
+      icon: '',
+      class: '',
+      cols: 3,
+      value: [],
+      isRequired: false,
+      options: [
+        { name: 'نعم', id: true },
+        { name: 'لا', id: false }
+      ]
+    },
+    {
+      label: 'تاريخ الإنشاء',
+      name: 'createdDate',
+      formControlName: 'createdDate',
+      type: 'datepicker',
+      readonly: false,
+      placeholder: 'تاريخ الإنشاء',
+      icon: '',
+      class: '',
+      cols: 3,
+      value: [],
+      isRequired: false
+    }
+  ]
+
   data_table: any = {}
 
 
   ngOnInit() {
+    this.initFilterForm()
     if (this.PermissionsService.isHasPermissions(this.select_group_permission)) {
-      this.getGroups()
-      this.getTenants()
-      
       this.data_table = {
         cols: [
           {
@@ -160,7 +219,8 @@ export class GroupsComponent implements OnInit {
         data: [
         ]
       }
-      // this.appendData()
+      this.getGroups()
+      this.getTenants()
     } else {
       this.Router.navigate(['cms/home'])
       this.SharedService.showToaster('error', 'خطأ', 'ليس لديك صلاحية للوصول لهذه الصفحة', 5000)
@@ -361,14 +421,28 @@ export class GroupsComponent implements OnInit {
   // --- lookups
 
   groupsList: any[] = []
+  groupsById: any = {}
   getGroups() {
     this.data_table.data = []
-    this.XhrService.get('v1/grouplevels/getall').subscribe(res => {
+    const params: string[] = []
+    const tenantId = this.filterForm?.get('tenantId')?.value?.id
+    const isParent = this.filterForm?.get('isParent')?.value?.id
+    const name = (this.filterForm?.get('name')?.value || '').trim()
+    const createdDate = this.formatCreatedDate(this.filterForm?.get('createdDate')?.value)
+    if (tenantId) params.push(`tenantId=${encodeURIComponent(tenantId)}`)
+    if (isParent === true || isParent === false) params.push(`isParent=${isParent}`)
+    if (name) params.push(`name=${encodeURIComponent(name)}`)
+    if (createdDate) params.push(`createdDate=${createdDate}`)
+    const endpoint = 'v1/grouplevels/getall' + (params.length ? `?${params.join('&')}` : '')
+    this.XhrService.get(endpoint).subscribe(res => {
       // console.log(res)
       if (res.data) {
         this.groupsList = res.data
         for (let i = 0; i < this.groupsList.length; i++) {
-          let parent: any = this.groupsList.find((group: any) => group.id == this.groupsList[i].parentId)
+          this.groupsById[this.groupsList[i].id] = this.groupsList[i]
+        }
+        for (let i = 0; i < this.groupsList.length; i++) {
+          let parent: any = this.groupsById[this.groupsList[i].parentId]
           this.data_table.data.push({
             number: i + 1,
             groupName: this.groupsList[i].groupNameWithTenant || this.groupsList[i].name,
@@ -395,7 +469,50 @@ export class GroupsComponent implements OnInit {
       }
       let control = this.groupControls.find(control => control.name == 'tenantId')
       control ? control.options = options : null
+      let filterControl = this.filterControls.find(control => control.name == 'tenantId')
+      filterControl ? filterControl.options = options : null
     })
+  }
+
+  initFilterForm() {
+    const fieldsCtrls: any = {}
+    this.filterControls.forEach((field: any) => {
+      fieldsCtrls[field.formControlName] = this.FormBuilder.control(null)
+    })
+    this.filterForm = this.FormBuilder.group(fieldsCtrls)
+    this.filterForm.get('createdDate')?.valueChanges.subscribe((value: any) => {
+      if (!value || this.formatCreatedDate(value)) {
+        this.getGroups()
+      }
+    })
+  }
+
+  formatCreatedDate(value: any): string {
+    if (!value) {
+      return ''
+    }
+    if (value instanceof Date && !isNaN(value.getTime())) {
+      const month = String(value.getMonth() + 1).padStart(2, '0')
+      const day = String(value.getDate()).padStart(2, '0')
+      return `${value.getFullYear()}-${month}-${day}`
+    }
+    if (typeof value === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(value)) {
+      return value
+    }
+    return ''
+  }
+
+  applyFilter() {
+    this.getGroups()
+  }
+
+  onFilterEnter(event: Event) {
+    const target = event.target as HTMLElement
+    if (!target || target.tagName !== 'INPUT') {
+      return
+    }
+    event.preventDefault()
+    this.getGroups()
   }
 
   parentGroupsList = []

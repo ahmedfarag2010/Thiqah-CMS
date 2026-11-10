@@ -45,6 +45,10 @@
                         <div class="content-box__body">
                             <div class="topic-details__info">
                                 <div class="topic-details__property">
+                                    <span>الشركة</span>
+                                    <p>{{transactionData?.groupTenantName ? transactionData?.groupTenantName : '-'}}</p>
+                                </div>
+                                <div class="topic-details__property">
                                     <span>نوع المعاملة</span>
                                     <p>{{transactionType ? transactionType : '-'}}</p>
                                 </div>
@@ -230,6 +234,7 @@
                     <div class="content-box__body">
                         <div class="qr-box">
                                 <qr-code [value]="qr_link" size="300" errorCorrectionLevel="H" />
+                                <p class="qr-box__number">{{transactionData?.registrationNumber ? transactionData.registrationNumber : '-'}}</p>
                         </div>
                     </div>
                 </div>

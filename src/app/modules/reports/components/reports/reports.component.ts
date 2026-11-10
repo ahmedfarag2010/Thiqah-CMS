@@ -107,12 +107,12 @@ export class ReportsComponent implements OnInit {
       options: []
     },
     {
-      label: 'المستأجر',
+      label: 'الشركة',
       name: 'tenantId',
       formControlName: 'tenantId',
       type: 'dropdown',
       readonly: false,
-      placeholder: 'أختر المستأجر',
+      placeholder: 'أختر الشركة',
       icon: '',
       class: '',
       cols: 3,
@@ -180,6 +180,10 @@ export class ReportsComponent implements OnInit {
             size:'mid'
           },
           {
+            label:'الشركة',
+            size:'mid'
+          },
+          {
             label:'الجهة',
             size:'mid'
           },
@@ -207,6 +211,10 @@ export class ReportsComponent implements OnInit {
           },
           {
             label:'رقم الصادر والتاريخ',
+            size:'mid'
+          },
+          {
+            label:'الشركة',
             size:'mid'
           },
           {
@@ -302,6 +310,10 @@ export class ReportsComponent implements OnInit {
                 size:'mid'
               },
               {
+                label:this.transactionsList[i].groupTenantName || '-',
+                size:'mid'
+              },
+              {
                 label:this.transactionsList[i].groupLevelName,
                 size:'mid'
               },
@@ -330,6 +342,10 @@ export class ReportsComponent implements OnInit {
               },
               {
                 label:`${this.transactionsList[i].registrationNumber} - ${this.SharedService.transformDateFormat(this.transactionsList[i].date)}`,
+                size:'mid'
+              },
+              {
+                label:this.transactionsList[i].groupTenantName || '-',
                 size:'mid'
               },
               {

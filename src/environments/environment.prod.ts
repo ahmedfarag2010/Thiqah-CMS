@@ -1,4 +1,4 @@
 export const environment = {
-    baseURL:'https://cmapi.thiqah.sa/api/',
+    baseURL:'https://cms-api.thiqah.sa/api/',
     production:true
 }

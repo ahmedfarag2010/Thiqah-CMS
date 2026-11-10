@@ -37,6 +37,10 @@ export class InboxComponent implements OnInit {
           key: 'registrationIncomingOutcomingNumber'
         },
         {
+          label: 'الشركة',
+          key: 'groupTenantName'
+        },
+        {
           label: 'التاريخ',
           key: 'date'
         },

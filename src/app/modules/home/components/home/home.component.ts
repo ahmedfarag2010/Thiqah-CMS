@@ -30,6 +30,10 @@ export class HomeComponent implements OnInit {
           label: 'رقم القيد',
           key: 'registrationIncomingOutcomingNumber'
         },
+        {
+          label: 'الشركة',
+          key: 'groupTenantName'
+        },
         // {
         //   label: 'جهة الإحالة',
         //   key: 'groupLevelName'
@@ -84,6 +88,7 @@ export class HomeComponent implements OnInit {
         if (this.selectedDate == this.transactionsList[i].expirationDate.split('T')[0]) {
           this.data_table.data.push({
             registrationIncomingOutcomingNumber: this.transactionsList[i].registrationIncomingOutcomingNumber,
+            groupTenantName: this.transactionsList[i].groupTenantName,
             topic: this.transactionsList[i].topic,
             isShow: true
           })

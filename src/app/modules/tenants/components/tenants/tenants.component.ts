@@ -19,8 +19,8 @@ export class TenantsComponent implements OnInit {
   isShowTenantModal = false
   tenantForm: FormGroup
   currentAction = 'add'
-  modalTitle = 'إنشاء مستأجر جديد'
-  modalButton = 'إنشاء مستأجر'
+  modalTitle = 'إنشاء شركة جديدة'
+  modalButton = 'إنشاء شركة'
   currentTenant: any
 
   tenantControls: FBControl[] = [
@@ -30,7 +30,7 @@ export class TenantsComponent implements OnInit {
       formControlName: 'name',
       type: 'textbox',
       readonly: false,
-      placeholder: 'أكتب اسم المستأجر',
+      placeholder: 'أكتب اسم الشركة',
       icon: '',
       class: '',
       cols: 12,
@@ -43,7 +43,7 @@ export class TenantsComponent implements OnInit {
       formControlName: 'description',
       type: 'textbox',
       readonly: false,
-      placeholder: 'أكتب وصف المستأجر',
+      placeholder: 'أكتب وصف الشركة',
       icon: '',
       class: '',
       cols: 12,
@@ -64,12 +64,12 @@ export class TenantsComponent implements OnInit {
       isRequired: true
     },
     {
-      label: 'اسم البادئة',
+      label: 'وصف البادئة',
       name: 'prefixName',
       formControlName: 'prefixName',
       type: 'textbox',
       readonly: false,
-      placeholder: 'أكتب اسم البادئة',
+      placeholder: 'أكتب وصف البادئة',
       icon: '',
       class: '',
       cols: 12,
@@ -102,7 +102,7 @@ export class TenantsComponent implements OnInit {
           key: 'prefix'
         },
         {
-          label: 'اسم البادئة',
+          label: 'وصف البادئة',
           key: 'prefixName'
         },
         {
@@ -117,6 +117,7 @@ export class TenantsComponent implements OnInit {
   ngOnInit(): void {
     this.getTenants()
   }
+
 
   getTenants() {
     this.data_table.data = []
@@ -148,7 +149,7 @@ export class TenantsComponent implements OnInit {
                 <path d="M19.6414 17.1603C19.9148 14.8227 20.0018 12.4688 19.9023 10.1208C19.8976 10.0084 19.9399 9.89898 20.0194 9.81942L21.0027 8.83609C21.1236 8.71519 21.3302 8.79194 21.3415 8.96254C21.5265 11.7522 21.4564 14.5545 21.1312 17.3346C20.8946 19.3571 19.2703 20.9421 17.2583 21.167C13.7917 21.5544 10.2083 21.5544 6.74177 21.167C4.72971 20.9421 3.10538 19.3571 2.86883 17.3346C2.45429 13.7903 2.45429 10.2097 2.86883 6.66543C3.10538 4.6429 4.72971 3.05789 6.74177 2.83301C9.37152 2.5391 12.0685 2.46815 14.7306 2.62016C14.9022 2.62996 14.9804 2.83757 14.8589 2.95909L13.8664 3.95165C13.7877 4.03034 13.6798 4.07261 13.5685 4.06885C11.3421 3.99376 9.10055 4.07872 6.90838 4.32373C5.57827 4.47239 4.51278 5.522 4.35867 6.83968C3.95767 10.2682 3.95767 13.7318 4.35867 17.1603C4.51278 18.478 5.57827 19.5276 6.90838 19.6763C10.2642 20.0513 13.7358 20.0513 17.0916 19.6763C18.4218 19.5276 19.4872 18.478 19.6414 17.1603Z" fill="#36B4E5"/>
               </svg>
             </span>
-            <p class="tooltip">تعديل المستأجر</p>
+            <p class="tooltip">تعديل الشركة</p>
           </div>
           <div data-index=${i} has-event='true' data-event='click' data-action='deleteTenant'>
             <span class="icon">
@@ -158,7 +159,7 @@ export class TenantsComponent implements OnInit {
                 <path fill-rule="evenodd" clip-rule="evenodd" d="M5.99142 7.91718C6.03363 7.53735 6.35468 7.25 6.73684 7.25H17.2632C17.6453 7.25 17.9664 7.53735 18.0086 7.91718L18.2087 9.71852C18.5715 12.9838 18.5715 16.2793 18.2087 19.5446L18.189 19.722C18.045 21.0181 17.0404 22.0517 15.7489 22.2325C13.2618 22.5807 10.7382 22.5807 8.25108 22.2325C6.95954 22.0517 5.955 21.0181 5.81098 19.722L5.79128 19.5446C5.42846 16.2793 5.42846 12.9838 5.79128 9.71852L5.99142 7.91718ZM7.40812 8.75L7.2821 9.88417C6.93152 13.0394 6.93152 16.2238 7.2821 19.379L7.3018 19.5563C7.37011 20.171 7.84652 20.6612 8.45905 20.747C10.8082 21.0758 13.1918 21.0758 15.5409 20.747C16.1535 20.6612 16.6299 20.171 16.6982 19.5563L16.7179 19.379C17.0685 16.2238 17.0685 13.0394 16.7179 9.88417L16.5919 8.75H7.40812Z" fill="#36b4e5" />
               </svg>
             </span>
-            <p class="tooltip">حذف المستأجر</p>
+            <p class="tooltip">حذف الشركة</p>
           </div>
         </div>
       `
@@ -180,8 +181,8 @@ export class TenantsComponent implements OnInit {
 
   initTenantForm(type: string = 'add') {
     this.currentAction = type
-    this.modalTitle = type == 'edit' ? 'تعديل المستأجر' : 'إنشاء مستأجر جديد'
-    this.modalButton = type == 'edit' ? 'تعديل المستأجر' : 'إنشاء مستأجر'
+    this.modalTitle = type == 'edit' ? 'تعديل الشركة' : 'إنشاء شركة جديدة'
+    this.modalButton = type == 'edit' ? 'تعديل الشركة' : 'إنشاء شركة'
     this.isShowTenantModal = true
     const fieldsCtrls: any = {}
     this.tenantControls.forEach((field: any) => {

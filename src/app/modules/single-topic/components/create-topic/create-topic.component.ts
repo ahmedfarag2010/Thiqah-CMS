@@ -61,12 +61,12 @@ export class CreateTopicComponent implements OnInit {
 
   topicDetailsControls: FBControl[] = [
     {
-      label: 'المستأجر',
+      label: 'الشركة',
       name: 'tenantId',
       formControlName: 'tenantId',
       type: 'dropdown',
       readonly: false,
-      placeholder: 'أختر المستأجر',
+      placeholder: 'أختر الشركة',
       icon: '',
       class: '',
       cols: 4,

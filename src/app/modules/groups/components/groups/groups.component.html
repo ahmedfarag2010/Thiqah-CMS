@@ -12,6 +12,23 @@
                 <p class="font-line">إنشاء مجموعة</p>
             </a>
         </div>
+        <form [formGroup]="filterForm" class="groups-filter" *ngIf="filterForm" (keydown.enter)="onFilterEnter($event)">
+            <div class="row">
+                <div *ngFor="let field of filterControls" class="col-md-{{field.cols}}">
+                    <app-input-text *ngIf="field.type == 'textbox'" [field]="field" [formGroup]="filterForm"></app-input-text>
+                    <app-dropdown *ngIf="field.type == 'dropdown'" (dropdownValue)="applyFilter()" [field]="field" [formGroup]="filterForm"></app-dropdown>
+                    <app-datepicker *ngIf="field.type == 'datepicker'" [field]="field" [formGroup]="filterForm"></app-datepicker>
+                </div>
+                <div class="col-md-3">
+                    <div class="control-box groups-filter__action">
+                        <label>&nbsp;</label>
+                        <button type="button" (click)="applyFilter()" class="btn btn--secondary">
+                            <p class="font-line">بحث</p>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
         <app-data-table [data_table]="data_table" (clickedRow)="selectedRow($event)"
             (clickedChildButton)="clickChildButton($event)"></app-data-table>
     </div>
